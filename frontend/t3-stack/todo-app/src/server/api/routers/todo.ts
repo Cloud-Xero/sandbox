@@ -35,4 +35,14 @@ export const todoRouter = createTRPCRouter({
     });
   }),
 
+  getSingleTask: protectedProcedure
+    .input(getSingleTaskSchema)
+    .query(({ ctx, input }) => {
+      return ctx.prisma.task.findUnique({
+        where: {
+          id: input.taskId,
+        },
+      });
+    }),
+
 });
