@@ -45,4 +45,19 @@ export const todoRouter = createTRPCRouter({
       });
     }),
 
+  updateTask: protectedProcedure
+    .input(updateTaskSchema)
+    .mutation(async ({ ctx, input }) => {
+      const task = await ctx.prisma.task.update({
+        where: {
+          id: input.taskId,
+        },
+        data: {
+          title: input.title,
+          body: input.body,
+        },
+      });
+      return task;
+    }),
+
 });
