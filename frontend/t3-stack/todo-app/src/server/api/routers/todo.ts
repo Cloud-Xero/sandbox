@@ -5,7 +5,7 @@ import {
   deleteTaskSchema,
 } from "../../../schema/todo";
 
-import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
 
 export const todoRouter = createTRPCRouter({
   createTask: protectedProcedure
@@ -23,4 +23,16 @@ export const todoRouter = createTRPCRouter({
       });
       return task;
     }),
+
+  getTasks: publicProcedure.query(({ ctx }) => {
+    return ctx.prisma.task.findMany({
+      where: {
+        userId: ctx.session?.user?.id,
+      },
+      orderBy: {
+        createAt: "desc",
+      },
+    });
+  }),
+
 });
