@@ -60,4 +60,13 @@ export const todoRouter = createTRPCRouter({
       return task;
     }),
 
+  deleteTask: protectedProcedure
+    .input(deleteTaskSchema)
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.task.delete({
+        where: {
+          id: input.taskId,
+        },
+      });
+    }),
 });
