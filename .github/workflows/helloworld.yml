@@ -1,0 +1,12 @@
+name "Hello World"
+
+# pushされたら実行される
+on: [push] 
+
+# 実行される内容を記述
+jobs:
+  sample:
+    name: Hello world job
+    runs-on: ubuntu-latest        # 実行環境の定義
+    steps:                        # 実行する内容の定義
+      - run: echo "Hello World!"
