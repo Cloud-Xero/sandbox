@@ -11,8 +11,10 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@astrojs/preact": "^2.1.0",
     "@astrojs/rss": "^2.3.1",
-    "astro": "^2.0.18"
+    "astro": "^2.0.18",
+    "preact": "^10.13.1"
   },
   "devDependencies": {
     "prettier": "^2.8.4",
