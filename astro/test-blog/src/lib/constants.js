@@ -4,6 +4,6 @@ export const siteMeta = {
   siteUrl: "https://**************",
   siteType: "website",
   siteLocale: "ja_JP",
-  siteIcon: "/favicon.png",
+  siteIcon: "/favicon.svg",
   siteImg: "/ogp.jpg",
 };
