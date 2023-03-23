@@ -1,20 +1,19 @@
 ---
-import "../styles/config.css";
-import "../styles/default.css";
-import "../styles/layout.css";
+import "@styles/config.css";
+import "@styles/default.css";
+import "@styles/layout.css";
 
 import Footer from "@components/footer.astro";
 import Header from "@components/header.astro";
 import Container from "@components/container.astro";
+import Meta from "@components/meta.astro";
+
+const props = Astro.props;
 ---
 
 <html lang="ja">
   <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Tech Flow.</title>
+    <Meta {...props} />
   </head>
   <body>
     <Container>
