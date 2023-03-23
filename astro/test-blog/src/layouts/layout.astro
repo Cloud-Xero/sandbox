@@ -1,6 +1,11 @@
 ---
+import "../styles/config.css";
+import "../styles/default.css";
+import "../styles/layout.css";
+
 import Footer from "../components/footer.astro";
 import Header from "../components/header.astro";
+import Container from "../components/container.astro";
 ---
 
 <html lang="ja">
@@ -12,10 +17,12 @@ import Header from "../components/header.astro";
     <title>Tech Flow.</title>
   </head>
   <body>
-    <Header />
-    <main>
-      <slot />
-    </main>
-    <Footer />
+    <Container>
+      <Header />
+      <main>
+        <slot />
+      </main>
+      <Footer />
+    </Container>
   </body>
 </html>
