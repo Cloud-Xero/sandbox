@@ -1,0 +1,25 @@
+---
+import Layout from "@layouts/layout.astro";
+import { getCollection } from "astro:content";
+import { compareDesc } from "date-fns";
+
+const blogPosts = await getCollection("blog");
+const sortedBlogPosts = blogPosts.sort((a, b) =>
+  compareDesc(a.data.pubDate as Date, b.data.pubDate)
+);
+---
+
+<Layout>
+  <h1>Tech Flow.</h1>
+  <div>
+    {
+      sortedBlogPosts.map((post) => {
+        return (
+          <article>
+            <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+          </article>
+        );
+      })
+    }
+  </div>
+</Layout>
