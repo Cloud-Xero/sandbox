@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import './tailwind.css'
 
 let scene, camera, renderer;
 
