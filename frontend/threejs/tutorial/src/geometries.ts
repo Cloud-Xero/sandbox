@@ -27,14 +27,22 @@ type Geometry =
   | THREE.BoxGeometry
   | THREE.SphereGeometry
   | THREE.PlaneGeometry
-  | THREE.TorusGeometry;
+  | THREE.TorusGeometry
+  | THREE.BufferGeometry;
+
+type Material = THREE.MeshNormalMaterial | THREE.MeshBasicMaterial;
 
 const createMaterial = () => {
   return new THREE.MeshNormalMaterial();
   // return new THREE.MeshNormalMaterial({ wireframe: true }); // ワイヤーフレームを確認する場合
 };
 
-const doMesh = (geometry: Geometry, material: THREE.MeshNormalMaterial) => {
+const createBasicMaterial = () => {
+  // return new THREE.MeshBasicMaterial();
+  return new THREE.MeshBasicMaterial({ wireframe: true }); // ワイヤーフレームを確認する場合
+};
+
+const doMesh = (geometry: Geometry, material: Material) => {
   return new THREE.Mesh(geometry, material);
 };
 
@@ -43,7 +51,7 @@ const getBoxGeometry = (): void => {
   const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
   const material = createMaterial(); // マテリアル
   const box = doMesh(boxGeometry, material); // メッシュ化
-  scene.add(box); // シーンに追加
+  // scene.add(box); // シーンに追加
 };
 
 // 球体
@@ -52,7 +60,7 @@ const getSphereGeometry = (): void => {
   const material = createMaterial(); // マテリアル
   const sphere = doMesh(sphereGeometry, material); // メッシュ化
   sphere.position.x = 1.5; // 重なってしまうので球体の位置を変更
-  scene.add(sphere); // シーンに追加
+  // scene.add(sphere); // シーンに追加
 };
 
 // 平面
@@ -62,7 +70,7 @@ const getPlaneGeometry = (): void => {
   const plane = doMesh(planeGeometry, material); // メッシュ化
   plane.rotation.x = -Math.PI * 0.5; // x軸に対して90度回転させて裏面ではなく表面が見えるようにする
   plane.position.y = -0.5; // 平面を縦に0.5だけ下げることで、BOXの底に平面が接地する
-  scene.add(plane); // シーンに追加
+  // scene.add(plane); // シーンに追加
 };
 
 // ドーナツ型
@@ -71,13 +79,42 @@ const getTorusGeometry = (): void => {
   const material = createMaterial(); // マテリアル
   const torus = doMesh(torusGeometry, material); // メッシュ化
   torus.position.x = -1.5;
-  scene.add(torus);
+  // scene.add(torus); // シーンに追加
+};
+
+// バッファジオメトリ（任意の図形を生成できる：今回は二等辺三角形）
+const getBufferGeometry = () => {
+  const bufferGeometry = new THREE.BufferGeometry();
+  const positionArray = new Float32Array(9); // 小数点の情報しか入らない配列に与えた引数が、所有する情報数になる
+
+  // 頂点の情報を指定する
+  positionArray[0] = 0; // 頂点A：X座標
+  positionArray[1] = 0; // 頂点A：Y座標
+  positionArray[2] = 0; // 頂点A：Z座標
+
+  positionArray[3] = 0; // 頂点B：X座標
+  positionArray[4] = 1; // 頂点B：Y座標
+  positionArray[5] = 0; // 頂点B：Z座標
+
+  positionArray[6] = 1; // 頂点C：X座標
+  positionArray[7] = 0; // 頂点C：Y座標
+  positionArray[8] = 0; // 頂点C：Z座標
+
+  console.log(positionArray); // [0, 0, 0, 0, 1, 0, 1, 0, 0]
+
+  const positionAttribute = new THREE.BufferAttribute(positionArray, 3); // １つの頂点に対して３つの座標が指定されている
+  bufferGeometry.setAttribute("position", positionAttribute); // positionの属性をジオメトリに組み込む
+
+  const material = createBasicMaterial(); // マテリアル（光源を必要としない）
+  const buffer = doMesh(bufferGeometry, material); // メッシュ化
+  scene.add(buffer); // シーンに追加
 };
 
 getBoxGeometry();
 getSphereGeometry();
 getPlaneGeometry();
 getTorusGeometry();
+getBufferGeometry();
 
 //ライト
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
