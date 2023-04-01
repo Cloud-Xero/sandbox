@@ -35,54 +35,30 @@ const doMesh = (geometry: Geometry, material: THREE.MeshNormalMaterial) => {
 };
 
 // 立方体
-const getBoxGeometry = () => {
+const getBoxGeometry = (): void => {
   const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
-
-  //マテリアル
-  const material = createMaterial();
-
-  // メッシュ化
-  const box = doMesh(boxGeometry, material);
-
-  // シーンに追加
-  scene.add(box);
+  const material = createMaterial(); // マテリアル
+  const box = doMesh(boxGeometry, material); // メッシュ化
+  scene.add(box); // シーンに追加
 };
 
 // 球体
-const getSphereGeometry = () => {
+const getSphereGeometry = (): void => {
   const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 16);
-
-  //マテリアル
-  const material = createMaterial();
-
-  // メッシュ化
-  const sphere = doMesh(sphereGeometry, material);
-
-  // 重なってしまうので球体の位置を変更
-  sphere.position.x = 1.5;
-
-  // シーンに追加
-  scene.add(sphere);
+  const material = createMaterial(); // マテリアル
+  const sphere = doMesh(sphereGeometry, material); // メッシュ化
+  sphere.position.x = 1.5; // 重なってしまうので球体の位置を変更
+  scene.add(sphere); // シーンに追加
 };
 
 // 平面
-const getPlaneGeometry = () => {
+const getPlaneGeometry = (): void => {
   const planeGeometry = new THREE.PlaneGeometry(10, 10);
-
-  // マテリアル
-  const material = createMaterial();
-
-  // メッシュ化
-  const plane = doMesh(planeGeometry, material);
-
-  // x軸に対して90度回転させて裏面ではなく表面が見えるようにする
-  plane.rotation.x = -Math.PI * 0.5;
-
-  // 平面を縦に0.5だけ下げることで、BOXの底に平面が接地する
-  plane.position.y = -0.5;
-
-  // シーンに追加
-  scene.add(plane);
+  const material = createMaterial(); // マテリアル
+  const plane = doMesh(planeGeometry, material); // メッシュ化
+  plane.rotation.x = -Math.PI * 0.5; // x軸に対して90度回転させて裏面ではなく表面が見えるようにする
+  plane.position.y = -0.5; // 平面を縦に0.5だけ下げることで、BOXの底に平面が接地する
+  scene.add(plane); // シーンに追加
 };
 
 getBoxGeometry();
