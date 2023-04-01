@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import "./tailwind.css";
 
-let scene, camera, renderer;
+let scene, camera, renderer, pointLight;
 
 // シーンの追加
 scene = new THREE.Scene();
@@ -34,9 +34,14 @@ let ballMesh = new THREE.Mesh(ballGeometry, ballMaterial);
 scene.add(ballMesh);
 
 // 平行光源を追加
-let directionalLight = new THREE.DirectionalLight(0xffffff, 2); // DirectionalLight(色, 高原の強さ)
+let directionalLight = new THREE.DirectionalLight(0xffffff, 2); // DirectionalLight(色, 光源の強さ)
 directionalLight.position.set(1, 1, 1); // 真上からではなく、x=1, y=1, z=1 の位置から光を当てる
 scene.add(directionalLight);
+
+// ポイント高原の追加
+pointLight = new THREE.PointLight(0xffffff, 2); // PointLight(色, 光源の強さ)
+pointLight.position.set(-200, -200, -200);
+scene.add(pointLight);
 
 // レンダリング
 renderer.render(scene, camera); // camera のポジションを変更しないと画面上に表示されない
