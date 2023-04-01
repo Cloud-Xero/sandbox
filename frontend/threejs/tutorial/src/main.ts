@@ -20,6 +20,7 @@ camera.position.set(0, 0, +500); // z軸だけに+500動かす
 renderer = new THREE.WebGLRenderer({ alpha: true }); // alpha は透明度（デフォルトではfalseなので、透明度を上げることで背景画像が表示される）
 document.body.appendChild(renderer.domElement); // body要素内に表示
 renderer.setSize(window.innerWidth, window.innerHeight); // 画面いっぱいに表示
+renderer.setPixelRatio(window.devicePixelRatio); // 画像の解像度をデバイスに合わせる
 renderer.render(scene, camera);
 
 // テクスチャの追加（オブジェクトに画像をペースト）
