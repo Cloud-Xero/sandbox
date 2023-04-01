@@ -25,3 +25,9 @@ let ballGeometry = new THREE.SphereGeometry(100, 64, 32); // SphereGeometry(半�
 
 // マテリアル（材質）の作成
 let ballMaterial = new THREE.MeshPhysicalMaterial(); // MeshPhysicalMaterial は光源を必要とするマテリアル
+
+// メッシュ化
+let ballMesh = new THREE.Mesh(ballGeometry, ballMaterial);
+
+// シーンに追加
+scene.add(ballMesh);
