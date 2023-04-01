@@ -19,3 +19,6 @@ renderer = new THREE.WebGLRenderer({ alpha: true }); // alpha は透明度（デ
 document.body.appendChild(renderer.domElement); // body要素内に表示
 renderer.setSize(window.innerWidth, window.innerHeight); // 画面いっぱいに表示
 renderer.render(scene, camera);
+
+// ジオメトリ（３Dオブジェクト）の作成
+let ballGeometry = new THREE.SphereGeometry(100, 64, 32); // SphereGeometry(半径, wideセグメント, heightセグメント)
