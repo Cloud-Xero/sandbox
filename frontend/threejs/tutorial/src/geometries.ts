@@ -23,7 +23,11 @@ document.body.appendChild(renderer.domElement);
 /**
  * ジオメトリの作成
  **/
-type Geometry = THREE.BoxGeometry | THREE.SphereGeometry | THREE.PlaneGeometry;
+type Geometry =
+  | THREE.BoxGeometry
+  | THREE.SphereGeometry
+  | THREE.PlaneGeometry
+  | THREE.TorusGeometry;
 
 const createMaterial = () => {
   return new THREE.MeshNormalMaterial();
@@ -61,9 +65,19 @@ const getPlaneGeometry = (): void => {
   scene.add(plane); // シーンに追加
 };
 
+// ドーナツ型
+const getTorusGeometry = (): void => {
+  const torusGeometry = new THREE.TorusGeometry(0.5, 0.2, 15, 100, Math.PI * 2);
+  const material = createMaterial(); // マテリアル
+  const torus = doMesh(torusGeometry, material); // メッシュ化
+  torus.position.x = -1.5;
+  scene.add(torus);
+};
+
 getBoxGeometry();
 getSphereGeometry();
 getPlaneGeometry();
+getTorusGeometry();
 
 //ライト
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
