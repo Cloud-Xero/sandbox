@@ -56,7 +56,15 @@ const init = () => {
   // マウス操作を可能にする（拡大・縮小も可能）
   controls = new OrbitControls(camera, renderer.domElement); // OrbitControls(カメラ, DOMエレメント)
 
+  window.addEventListener("resize", () => onWindowResize);
+
   animate(renderer, scene, camera);
+};
+
+// ブラウザのリサイズに対応させる
+const onWindowResize = (renderer: THREE.WebGLRenderer) => {
+  // rendererのサイズを随時更新
+  renderer.setSize(window.innerWidth, window.innerHeight);
 };
 
 // ポイント光源をオブジェクトの周りを巡回させる
