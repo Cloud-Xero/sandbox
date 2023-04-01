@@ -38,10 +38,14 @@ let directionalLight = new THREE.DirectionalLight(0xffffff, 2); // DirectionalLi
 directionalLight.position.set(1, 1, 1); // 真上からではなく、x=1, y=1, z=1 の位置から光を当てる
 scene.add(directionalLight);
 
-// ポイント高原の追加
+// ポイント光源の追加
 pointLight = new THREE.PointLight(0xffffff, 2); // PointLight(色, 光源の強さ)
 pointLight.position.set(-200, -200, -200);
 scene.add(pointLight);
+
+// ポイント光源の場所を特定する
+let pointLightHelper = new THREE.PointLightHelper(pointLight, 30);
+scene.add(pointLightHelper);
 
 // レンダリング
 renderer.render(scene, camera); // camera のポジションを変更しないと画面上に表示されない
