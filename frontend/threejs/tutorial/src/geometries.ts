@@ -82,23 +82,28 @@ const getTorusGeometry = (): void => {
   // scene.add(torus); // シーンに追加
 };
 
-// バッファジオメトリ（任意の図形を生成できる：今回は二等辺三角形）
+// バッファジオメトリ（任意の図形を生成できる：たくさん図形を生成するのに便利）
 const getBufferGeometry = () => {
   const bufferGeometry = new THREE.BufferGeometry();
-  const positionArray = new Float32Array(9); // 小数点の情報しか入らない配列に与えた引数が、所有する情報数になる
+  const count = 50;
+  const positionArray = new Float32Array(9 * count); // 小数点の情報しか入らない配列に与えた引数が、所有する情報数になる
 
   // 頂点の情報を指定する
-  positionArray[0] = 0; // 頂点A：X座標
-  positionArray[1] = 0; // 頂点A：Y座標
-  positionArray[2] = 0; // 頂点A：Z座標
+  [...new Array(9 * count)].map((_, i) => {
+    // -0.5で全ての三角形を中心に集め（-0.5 ~ 0.5 になるため中心が 0 になる）、さらに2倍することで -1 ~ 1 の範囲で生成することができる
+    positionArray[i] = (Math.random() - 0.5) * 2;
+  });
+  // positionArray[0] = 0; // 頂点A：X座標
+  // positionArray[1] = 0; // 頂点A：Y座標
+  // positionArray[2] = 0; // 頂点A：Z座標
 
-  positionArray[3] = 0; // 頂点B：X座標
-  positionArray[4] = 1; // 頂点B：Y座標
-  positionArray[5] = 0; // 頂点B：Z座標
+  // positionArray[3] = 0; // 頂点B：X座標
+  // positionArray[4] = 1; // 頂点B：Y座標
+  // positionArray[5] = 0; // 頂点B：Z座標
 
-  positionArray[6] = 1; // 頂点C：X座標
-  positionArray[7] = 0; // 頂点C：Y座標
-  positionArray[8] = 0; // 頂点C：Z座標
+  // positionArray[6] = 1; // 頂点C：X座標
+  // positionArray[7] = 0; // 頂点C：Y座標
+  // positionArray[8] = 0; // 頂点C：Z座標
 
   console.log(positionArray); // [0, 0, 0, 0, 1, 0, 1, 0, 0]
 
