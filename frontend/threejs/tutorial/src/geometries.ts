@@ -23,16 +23,26 @@ document.body.appendChild(renderer.domElement);
 /**
  * ジオメトリの作成
  **/
+type Geometry = THREE.BoxGeometry | THREE.SphereGeometry | THREE.PlaneGeometry;
+
+const createMaterial = () => {
+  return new THREE.MeshNormalMaterial();
+  // return new THREE.MeshNormalMaterial({ wireframe: true }); // ワイヤーフレームを確認する場合
+};
+
+const doMesh = (geometry: Geometry, material: THREE.MeshNormalMaterial) => {
+  return new THREE.Mesh(geometry, material);
+};
+
 // 立方体
 const getBoxGeometry = () => {
   const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
 
   //マテリアル
-  // const material = new THREE.MeshNormalMaterial();
-  const material = new THREE.MeshNormalMaterial({ wireframe: true }); // ワイヤーフレームを確認する場合
+  const material = createMaterial();
 
   // メッシュ化
-  const box = new THREE.Mesh(boxGeometry, material);
+  const box = doMesh(boxGeometry, material);
 
   // シーンに追加
   scene.add(box);
@@ -43,11 +53,10 @@ const getSphereGeometry = () => {
   const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 16);
 
   //マテリアル
-  // const material = new THREE.MeshNormalMaterial();
-  const material = new THREE.MeshNormalMaterial({ wireframe: true }); // ワイヤーフレームを確認する場合
+  const material = createMaterial();
 
   // メッシュ化
-  const sphere = new THREE.Mesh(sphereGeometry, material);
+  const sphere = doMesh(sphereGeometry, material);
 
   // 重なってしまうので球体の位置を変更
   sphere.position.x = 1.5;
@@ -61,11 +70,10 @@ const getPlaneGeometry = () => {
   const planeGeometry = new THREE.PlaneGeometry(10, 10);
 
   // マテリアル
-  const material = new THREE.MeshNormalMaterial();
-  // const material = new THREE.MeshNormalMaterial({ wireframe: true }); // ワイヤーフレームを確認する場合
+  const material = createMaterial();
 
   // メッシュ化
-  const plane = new THREE.Mesh(planeGeometry, material);
+  const plane = doMesh(planeGeometry, material);
 
   // x軸に対して90度回転させて裏面ではなく表面が見えるようにする
   plane.rotation.x = -Math.PI * 0.5;
