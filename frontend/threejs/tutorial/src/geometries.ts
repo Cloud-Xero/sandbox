@@ -56,8 +56,30 @@ const getSphereGeometry = () => {
   scene.add(sphere);
 };
 
+// 平面
+const getPlaneGeometry = () => {
+  const planeGeometry = new THREE.PlaneGeometry(10, 10);
+
+  // マテリアル
+  const material = new THREE.MeshNormalMaterial();
+  // const material = new THREE.MeshNormalMaterial({ wireframe: true }); // ワイヤーフレームを確認する場合
+
+  // メッシュ化
+  const plane = new THREE.Mesh(planeGeometry, material);
+
+  // x軸に対して90度回転させて裏面ではなく表面が見えるようにする
+  plane.rotation.x = -Math.PI * 0.5;
+
+  // 平面を縦に0.5だけ下げることで、BOXの底に平面が接地する
+  plane.position.y = -0.5;
+
+  // シーンに追加
+  scene.add(plane);
+};
+
 getBoxGeometry();
 getSphereGeometry();
+getPlaneGeometry();
 
 //ライト
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
