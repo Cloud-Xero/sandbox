@@ -33,5 +33,10 @@ let ballMesh = new THREE.Mesh(ballGeometry, ballMaterial);
 // シーンに追加
 scene.add(ballMesh);
 
+// 平行光源を追加
+let directionalLight = new THREE.DirectionalLight(0xffffff, 2); // DirectionalLight(色, 高原の強さ)
+directionalLight.position.set(1, 1, 1); // 真上からではなく、x=1, y=1, z=1 の位置から光を当てる
+scene.add(directionalLight);
+
 // レンダリング
 renderer.render(scene, camera); // camera のポジションを変更しないと画面上に表示されない
