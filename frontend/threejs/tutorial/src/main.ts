@@ -13,6 +13,7 @@ camera = new THREE.PerspectiveCamera(
   0.1,
   1000
 );
+camera.position.set(0, 0, +500); // z軸だけに+500動かす
 
 // レンダラーの追加
 renderer = new THREE.WebGLRenderer({ alpha: true }); // alpha は透明度（デフォルトではfalseなので、透明度を上げることで背景画像が表示される）
@@ -31,3 +32,6 @@ let ballMesh = new THREE.Mesh(ballGeometry, ballMaterial);
 
 // シーンに追加
 scene.add(ballMesh);
+
+// レンダリング
+renderer.render(scene, camera); // camera のポジションを変更しないと画面上に表示されない
