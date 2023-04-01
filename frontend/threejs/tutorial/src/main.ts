@@ -1,7 +1,8 @@
 import * as THREE from "three";
 import "./tailwind.css";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
-let scene, camera, renderer, pointLight: THREE.PointLight;
+let scene, camera, renderer, pointLight: THREE.PointLight, controls;
 
 // シーンの追加
 scene = new THREE.Scene();
@@ -46,6 +47,9 @@ scene.add(pointLight);
 // ポイント光源の場所を特定する
 let pointLightHelper = new THREE.PointLightHelper(pointLight, 30);
 scene.add(pointLightHelper);
+
+// マウス操作を可能にする（拡大・縮小も可能）
+controls = new OrbitControls(camera, renderer.domElement); // OrbitControls(カメラ, DOMエレメント)
 
 // ポイント光源をオブジェクトの周りを巡回させる
 const animate = (
