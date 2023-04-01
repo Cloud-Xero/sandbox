@@ -38,7 +38,26 @@ const getBoxGeometry = () => {
   scene.add(box);
 };
 
+// 球体
+const getSphereGeometry = () => {
+  const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 16);
+
+  //マテリアル
+  // const material = new THREE.MeshNormalMaterial();
+  const material = new THREE.MeshNormalMaterial({ wireframe: true }); // ワイヤーフレームを確認する場合
+
+  // メッシュ化
+  const sphere = new THREE.Mesh(sphereGeometry, material);
+
+  // 重なってしまうので球体の位置を変更
+  sphere.position.x = 1.5;
+
+  // シーンに追加
+  scene.add(sphere);
+};
+
 getBoxGeometry();
+getSphereGeometry();
 
 //ライト
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
