@@ -34,6 +34,16 @@ const setupDebugForUI = (shape: Mesh, material: Material): void => {
 
   gui.add(shape, "visible");
   gui.add(material, "wireframe");
+
+  gui.addColor(material, "color");
+  // gui.addColor(
+  //   {
+  //     cssColor: "#ff00ff",
+  //     rgbColor: { r: 0, g: 0.2, b: 0.4 },
+  //     customRange: [0, 127, 255],
+  //   },
+  //   "rgbColor"
+  // );
 };
 
 //シーン
@@ -65,8 +75,8 @@ const createMaterial = () => {
 
 // Basic Material
 const createBasicMaterial = () => {
-  // return new THREE.MeshBasicMaterial();
-  return new THREE.MeshBasicMaterial({ wireframe: true }); // ワイヤーフレームを確認する場合
+  return new THREE.MeshBasicMaterial({ color: "red" });
+  // return new THREE.MeshBasicMaterial({ wireframe: true }); // ワイヤーフレームを確認する場合
 };
 
 // Mesh
@@ -77,7 +87,7 @@ const doMesh = (geometry: Geometry, material: Material) => {
 // 立方体
 const getBoxGeometry = (): void => {
   const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
-  const material = createMaterial(); // マテリアル
+  const material = createBasicMaterial(); // マテリアル（光源を必要としない）
   const box = doMesh(boxGeometry, material); // メッシュ化
   scene.add(box); // シーンに追加
   setupDebugForUI(box, material);
