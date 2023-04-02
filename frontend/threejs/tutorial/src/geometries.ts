@@ -1,6 +1,37 @@
 import * as THREE from "three";
 import "./tailwind.css";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import GUI from "lil-gui";
+
+type Geometry =
+  | THREE.BoxGeometry
+  | THREE.SphereGeometry
+  | THREE.PlaneGeometry
+  | THREE.TorusGeometry
+  | THREE.BufferGeometry;
+
+type Material = THREE.MeshNormalMaterial | THREE.MeshBasicMaterial;
+
+type Mesh = THREE.Mesh<
+  | THREE.BoxGeometry
+  | THREE.SphereGeometry
+  | THREE.PlaneGeometry
+  | THREE.TorusGeometry
+  | THREE.BufferGeometry,
+  THREE.MeshNormalMaterial | THREE.MeshBasicMaterial
+>;
+
+/**
+ * UI Debug
+ **/
+const setupDebugForUI = (shape: Mesh): void => {
+  const gui = new GUI();
+  // console.log(gui);
+  gui.add(shape.position, "x", -3, 3, 0.01).name("transform X"); // gui.add(shape.position, "x").min(-3).max(3).step(0.01).name("transform X"); でも同じ
+  gui.add(shape.position, "y", -3, 3, 0.01).name("transform Y"); // gui.add(shape.position, "y").min(-3).max(3).step(0.01).name("transform Y"); でも同じ
+  gui.add(shape.position, "z", -3, 3, 0.01).name("transform Z"); // gui.add(shape.position, "z").min(-3).max(3).step(0.01).name("transform Z"); でも同じ
+  gui.add(shape.rotation, "x", -3, 3, 0.01).name("rotation X"); // gui.add(shape.rotation, "x").min(-3).max(3).step(0.01).name("rotation X"); でも同じ
+};
 
 //シーン
 const scene = new THREE.Scene();
@@ -14,7 +45,7 @@ const camera = new THREE.PerspectiveCamera(
 );
 camera.position.set(1, 1, 2);
 
-//レンダラー
+// レンダラー
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -23,25 +54,19 @@ document.body.appendChild(renderer.domElement);
 /**
  * ジオメトリの作成
  **/
-type Geometry =
-  | THREE.BoxGeometry
-  | THREE.SphereGeometry
-  | THREE.PlaneGeometry
-  | THREE.TorusGeometry
-  | THREE.BufferGeometry;
-
-type Material = THREE.MeshNormalMaterial | THREE.MeshBasicMaterial;
-
+// Normal Material
 const createMaterial = () => {
   return new THREE.MeshNormalMaterial();
   // return new THREE.MeshNormalMaterial({ wireframe: true }); // ワイヤーフレームを確認する場合
 };
 
+// Basic Material
 const createBasicMaterial = () => {
   // return new THREE.MeshBasicMaterial();
   return new THREE.MeshBasicMaterial({ wireframe: true }); // ワイヤーフレームを確認する場合
 };
 
+// Mesh
 const doMesh = (geometry: Geometry, material: Material) => {
   return new THREE.Mesh(geometry, material);
 };
@@ -51,7 +76,8 @@ const getBoxGeometry = (): void => {
   const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
   const material = createMaterial(); // マテリアル
   const box = doMesh(boxGeometry, material); // メッシュ化
-  // scene.add(box); // シーンに追加
+  scene.add(box); // シーンに追加
+  setupDebugForUI(box);
 };
 
 // 球体
@@ -60,7 +86,8 @@ const getSphereGeometry = (): void => {
   const material = createMaterial(); // マテリアル
   const sphere = doMesh(sphereGeometry, material); // メッシュ化
   sphere.position.x = 1.5; // 重なってしまうので球体の位置を変更
-  // scene.add(sphere); // シーンに追加
+  scene.add(sphere); // シーンに追加
+  // setupDebugForUI(sphere);
 };
 
 // 平面
@@ -70,7 +97,8 @@ const getPlaneGeometry = (): void => {
   const plane = doMesh(planeGeometry, material); // メッシュ化
   plane.rotation.x = -Math.PI * 0.5; // x軸に対して90度回転させて裏面ではなく表面が見えるようにする
   plane.position.y = -0.5; // 平面を縦に0.5だけ下げることで、BOXの底に平面が接地する
-  // scene.add(plane); // シーンに追加
+  scene.add(plane); // シーンに追加
+  // setupDebugForUI(plane);
 };
 
 // ドーナツ型
@@ -79,7 +107,8 @@ const getTorusGeometry = (): void => {
   const material = createMaterial(); // マテリアル
   const torus = doMesh(torusGeometry, material); // メッシュ化
   torus.position.x = -1.5;
-  // scene.add(torus); // シーンに追加
+  scene.add(torus); // シーンに追加
+  // setupDebugForUI(torus);
 };
 
 // バッファジオメトリ（任意の図形を生成できる：たくさん図形を生成するのに便利）
@@ -113,13 +142,14 @@ const getBufferGeometry = () => {
   const material = createBasicMaterial(); // マテリアル（光源を必要としない）
   const buffer = doMesh(bufferGeometry, material); // メッシュ化
   scene.add(buffer); // シーンに追加
+  // setupDebugForUI(buffer);
 };
 
 getBoxGeometry();
 getSphereGeometry();
 getPlaneGeometry();
 getTorusGeometry();
-getBufferGeometry();
+// getBufferGeometry();
 
 //ライト
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
