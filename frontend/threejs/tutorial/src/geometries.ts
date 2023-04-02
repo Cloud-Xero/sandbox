@@ -12,14 +12,7 @@ type Geometry =
 
 type Material = THREE.MeshNormalMaterial | THREE.MeshBasicMaterial;
 
-type Mesh = THREE.Mesh<
-  | THREE.BoxGeometry
-  | THREE.SphereGeometry
-  | THREE.PlaneGeometry
-  | THREE.TorusGeometry
-  | THREE.BufferGeometry,
-  THREE.MeshNormalMaterial | THREE.MeshBasicMaterial
->;
+type Mesh = THREE.Mesh<Geometry, Material>;
 
 /**
  * UI Debug
@@ -27,23 +20,21 @@ type Mesh = THREE.Mesh<
 const setupDebugForUI = (shape: Mesh, material: Material): void => {
   const gui = new GUI();
   // console.log(gui);
-  gui.add(shape.position, "x", -3, 3, 0.01).name("transform X"); // gui.add(shape.position, "x").min(-3).max(3).step(0.01).name("transform X"); でも同じ
-  gui.add(shape.position, "y", -3, 3, 0.01).name("transform Y"); // gui.add(shape.position, "y").min(-3).max(3).step(0.01).name("transform Y"); でも同じ
-  gui.add(shape.position, "z", -3, 3, 0.01).name("transform Z"); // gui.add(shape.position, "z").min(-3).max(3).step(0.01).name("transform Z"); でも同じ
-  gui.add(shape.rotation, "x", -3, 3, 0.01).name("rotation X"); // gui.add(shape.rotation, "x").min(-3).max(3).step(0.01).name("rotation X"); でも同じ
 
-  gui.add(shape, "visible");
-  gui.add(material, "wireframe");
+  // folder
+  const positionFolder = gui.addFolder("Position");
+  const visibleFolder = gui.addFolder("Visible");
+  const colorFolder = gui.addFolder("Color");
 
-  gui.addColor(material, "color");
-  // gui.addColor(
-  //   {
-  //     cssColor: "#ff00ff",
-  //     rgbColor: { r: 0, g: 0.2, b: 0.4 },
-  //     customRange: [0, 127, 255],
-  //   },
-  //   "rgbColor"
-  // );
+  positionFolder.add(shape.position, "x", -3, 3, 0.01).name("transform X"); // positionFolder.add(shape.position, "x").min(-3).max(3).step(0.01).name("transform X"); でも同じ
+  positionFolder.add(shape.position, "y", -3, 3, 0.01).name("transform Y"); // positionFolder.add(shape.position, "y").min(-3).max(3).step(0.01).name("transform Y"); でも同じ
+  positionFolder.add(shape.position, "z", -3, 3, 0.01).name("transform Z"); // positionFolder.add(shape.position, "z").min(-3).max(3).step(0.01).name("transform Z"); でも同じ
+  positionFolder.add(shape.rotation, "x", -3, 3, 0.01).name("rotation X"); // positionFolder.add(shape.rotation, "x").min(-3).max(3).step(0.01).name("rotation X"); でも同じ
+
+  visibleFolder.add(shape, "visible");
+  visibleFolder.add(material, "wireframe");
+
+  colorFolder.addColor(material, "color");
 };
 
 //シーン
