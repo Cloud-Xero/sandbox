@@ -11,6 +11,8 @@
 *.dll
 *.so
 *.dylib
+*.exec
+*/hello-world
 
 # Test binary, built with `go test -c`
 *.test
