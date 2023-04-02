@@ -24,13 +24,16 @@ type Mesh = THREE.Mesh<
 /**
  * UI Debug
  **/
-const setupDebugForUI = (shape: Mesh): void => {
+const setupDebugForUI = (shape: Mesh, material: Material): void => {
   const gui = new GUI();
   // console.log(gui);
   gui.add(shape.position, "x", -3, 3, 0.01).name("transform X"); // gui.add(shape.position, "x").min(-3).max(3).step(0.01).name("transform X"); でも同じ
   gui.add(shape.position, "y", -3, 3, 0.01).name("transform Y"); // gui.add(shape.position, "y").min(-3).max(3).step(0.01).name("transform Y"); でも同じ
   gui.add(shape.position, "z", -3, 3, 0.01).name("transform Z"); // gui.add(shape.position, "z").min(-3).max(3).step(0.01).name("transform Z"); でも同じ
   gui.add(shape.rotation, "x", -3, 3, 0.01).name("rotation X"); // gui.add(shape.rotation, "x").min(-3).max(3).step(0.01).name("rotation X"); でも同じ
+
+  gui.add(shape, "visible");
+  gui.add(material, "wireframe");
 };
 
 //シーン
@@ -77,7 +80,7 @@ const getBoxGeometry = (): void => {
   const material = createMaterial(); // マテリアル
   const box = doMesh(boxGeometry, material); // メッシュ化
   scene.add(box); // シーンに追加
-  setupDebugForUI(box);
+  setupDebugForUI(box, material);
 };
 
 // 球体
