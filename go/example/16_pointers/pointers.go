@@ -16,15 +16,15 @@ func zeroptr(iptr *int) {
 
 func main() {
 	i := 1
-	fmt.Println("initial:", i)
+	fmt.Println("initial:", i)  // initial: 1
 
 	zeroval(i)
-	fmt.Println("zeroval:", i)
+	fmt.Println("zeroval:", i)  // zeroval: 1
 
 	// &iで、iのメモリアドレス（iへのポインタ）を取得できる
 	zeroptr(&i)
-	fmt.Println("zeroptr:", i)
+	fmt.Println("zeroptr:", i)  // zeroptr: 0
 
 	// ポインタは表示することもできる
-	fmt.Println("pointer:", &i)
+	fmt.Println("pointer:", &i)  // pointer: 0xc00001e0e8
 }
