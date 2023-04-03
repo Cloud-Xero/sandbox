@@ -19,18 +19,19 @@ func vals() (int, int) {
 
 func main() {
 	res := plus(1, 2)
-	fmt.Println("1+2=", res)
+	fmt.Println("1+2=", res)  // 1+2= 3
 
 	res = plusPlus(1, 2, 3)
-	fmt.Println("1+2+3=", res)
+	fmt.Println("1+2+3=", res)  // 1+2+3= 6
 
 	// 多重代入で関数呼び出しから２つの戻り値を使用
 	a, b := vals()
-	fmt.Println(a)
-	fmt.Println(b)
+	fmt.Println(a)  // 3
+	fmt.Println(b)  // 7
 
 	// 戻り値の一部のみの仕様であればブランク識別子を使用
 	_, c := vals()
-	fmt.Println(c)
+	fmt.Println(c)  // 7
+
 
 }
