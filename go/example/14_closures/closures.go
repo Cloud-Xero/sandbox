@@ -17,11 +17,11 @@ func main() {
 	nextInt := instSeq()
 
 	// nextInt を呼び出すたびに更新される
-	fmt.Println(nextInt())
-	fmt.Println(nextInt())
-	fmt.Println(nextInt())
+	fmt.Println(nextInt())  // 1
+	fmt.Println(nextInt())  // 2
+	fmt.Println(nextInt())  // 3
 
 	// 関数ごとに個別の状態を持っていることを確認するためにもう一つ作成して実行
 	newInts := instSeq()
-	fmt.Println(newInts())
+	fmt.Println(newInts())  // 1
 }
