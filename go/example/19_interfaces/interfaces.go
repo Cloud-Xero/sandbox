@@ -47,16 +47,6 @@ func main() {
 	r := rect{width: 3, height: 4}
 	c := circle{radius: 5}
 
-	measure(r)
-	measure(c)
+	measure(r) // {3, 4} 12 14
+	measure(c) // {5} 78.53981633974483 31.41592653589793
 }
-
-/**
-$ go run interfaces.go
-{3 4}
-12
-14
-{5}
-78.53981633974483
-31.41592653589793
-*/
