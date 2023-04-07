@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import "./tailwind.css";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 let scene, camera, renderer, pointLight: THREE.PointLight, controls;
 

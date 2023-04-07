@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import "./tailwind.css";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import GUI from "lil-gui";
 
 type Geometry =
