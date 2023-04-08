@@ -9,8 +9,8 @@ const sortedBlogPosts = blogPosts.sort((a, b) =>
 );
 ---
 
-<Layout>
-  <h1>Tech Flow.</h1>
+<Layout pageTitle="Blog Posts" description="ブログの記事一覧">
+  <h1>Blog Posts</h1>
   <div>
     {
       sortedBlogPosts.map((post) => {
