@@ -92,8 +92,18 @@ const init = () => {
   // material.transparent = true; // opacityとtransparentで透過させることができる
 
   // MeshNormalMaterial（光源を必要としないマテリアル）
-  const material = new THREE.MeshNormalMaterial();
-  material.flatShading = true; // 平坦を表現できる
+  // const material = new THREE.MeshNormalMaterial();
+  // material.flatShading = true; // 平坦を表現できる
+
+  // 明かりを追加
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+  scene.add(ambientLight);
+  const pointLight = new THREE.PointLight(0xffffff, 1);
+  pointLight.position.set(1, 2, 3);
+  scene.add(pointLight);
+
+  const pointLightHelper = new THREE.PointLightHelper(pointLight, 1);
+  scene.add(pointLightHelper);
 
   // メッシュ化
   const sphere = new THREE.Mesh(SphereGeometry, material);
