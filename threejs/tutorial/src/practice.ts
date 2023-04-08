@@ -20,8 +20,7 @@ const animate = (
   const { sphere, plane, octahedron } = figures;
 
   const elapsedTime = clock.getElapsedTime(); // animate関数が呼ばれてからどれくらい時間が経過したかを計測
-
-  console.log(elapsedTime);
+  // console.log(elapsedTime);
 
   // オブジェクトを回転
   sphere.rotation.x = elapsedTime;
@@ -76,8 +75,17 @@ const init = () => {
   const planeGeometry = new THREE.PlaneGeometry(1, 1); // 平面：PlaneGeometry(縦, 横)
   const octahedronGeometry = new THREE.OctahedronGeometry(0.5);
 
+  // テキスチャ
+  const texture = new THREE.TextureLoader().load("./textures/brick.jpg"); // ファイルは public 内に置くこと
+
   // マテリアル
   const material = new THREE.MeshBasicMaterial();
+  material.map = texture;
+  material.color.set("red");
+  // material.wireframe = true;  // ワイヤーフレームが表示される
+  // material.side = THREE.DoubleSide; // 裏側にも適用される
+  material.opacity = 0.5;
+  material.transparent = true; // opacityとtransparentで透過させることができる
 
   // メッシュ化
   const sphere = new THREE.Mesh(SphereGeometry, material);
