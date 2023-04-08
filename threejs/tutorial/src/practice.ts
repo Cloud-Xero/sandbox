@@ -96,15 +96,20 @@ const init = () => {
   // material.flatShading = true; // 平坦を表現できる
 
   // MeshStandardMaterial（光と影を要する = 物理の法則に従っている）
-  const material = new THREE.MeshStandardMaterial();
-  material.color.set("#049ef4");
-  material.roughness = 0.14; // 光沢を表現（値が小さいほど粗さが少なくなり輝く）
-  material.metalness = 0.44; // 反射を表現
+  // const material = new THREE.MeshStandardMaterial();
+  // material.color.set("#049ef4");
+  // material.roughness = 0.14; // 光沢を表現（値が小さいほど粗さが少なくなり輝く）
+  // material.metalness = 0.44; // 反射を表現
+
+  // MeshPhongMaterial（反射の光を表現する）
+  const material = new THREE.MeshPhongMaterial();
+  material.shininess = 100;
+  material.specular = new THREE.Color("red");
 
   // 明かりを追加
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
   scene.add(ambientLight);
-  const pointLight = new THREE.PointLight(0xffffff, 1);
+  const pointLight = new THREE.PointLight(0xffffff, 0.3);
   pointLight.position.set(1, 2, 3);
   scene.add(pointLight);
 
