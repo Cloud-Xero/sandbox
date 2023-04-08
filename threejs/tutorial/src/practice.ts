@@ -95,6 +95,12 @@ const init = () => {
   // const material = new THREE.MeshNormalMaterial();
   // material.flatShading = true; // 平坦を表現できる
 
+  // MeshStandardMaterial（光と影を要する = 物理の法則に従っている）
+  const material = new THREE.MeshStandardMaterial();
+  material.color.set("#049ef4");
+  material.roughness = 0.14; // 光沢を表現（値が小さいほど粗さが少なくなり輝く）
+  material.metalness = 0.44; // 反射を表現
+
   // 明かりを追加
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
   scene.add(ambientLight);
