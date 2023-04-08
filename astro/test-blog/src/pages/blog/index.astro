@@ -11,12 +11,16 @@ const sortedBlogPosts = blogPosts.sort((a, b) =>
 
 <Layout pageTitle="Blog Posts" description="ブログの記事一覧">
   <h1>Blog Posts</h1>
-  <div>
+  <div class="grid">
     {
       sortedBlogPosts.map((post) => {
         return (
-          <article>
-            <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+          <article class="card">
+            <a href={`/blog/${post.slug}`}>
+              {post.data.title}
+              <img src={post.data.image} alt="" />
+              <h2>{post.data.title}</h2>
+            </a>
           </article>
         );
       })
