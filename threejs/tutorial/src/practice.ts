@@ -2,10 +2,12 @@ import * as THREE from "three";
 import "./tailwind.css";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
+type Material = THREE.MeshBasicMaterial | THREE.MeshNormalMaterial;
+
 type Figures = {
-  sphere: THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial>;
-  plane: THREE.Mesh<THREE.PlaneGeometry, THREE.MeshBasicMaterial>;
-  octahedron: THREE.Mesh<THREE.OctahedronGeometry, THREE.MeshBasicMaterial>;
+  sphere: THREE.Mesh<THREE.SphereGeometry, Material>;
+  plane: THREE.Mesh<THREE.PlaneGeometry, Material>;
+  octahedron: THREE.Mesh<THREE.OctahedronGeometry, Material>;
 };
 
 // animate関数の外部でインスタンス化を行う（animate関数が再帰的にう呼び出されるため）
