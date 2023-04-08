@@ -2,14 +2,38 @@ import * as THREE from "three";
 import "./tailwind.css";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
+type Figures = {
+  sphere: THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial>;
+  plane: THREE.Mesh<THREE.PlaneGeometry, THREE.MeshBasicMaterial>;
+  octahedron: THREE.Mesh<THREE.OctahedronGeometry, THREE.MeshBasicMaterial>;
+};
+
+// animate関数の外部でインスタンス化を行う（animate関数が再帰的にう呼び出されるため）
+const clock = new THREE.Clock();
+
 const animate = (
   renderer: THREE.WebGLRenderer,
   scene: THREE.Scene,
-  camera: THREE.PerspectiveCamera
+  camera: THREE.PerspectiveCamera,
+  figures: Figures
 ) => {
+  const { sphere, plane, octahedron } = figures;
+
+  const elapsedTime = clock.getElapsedTime(); // animate関数が呼ばれてからどれくらい時間が経過したかを計測
+
+  console.log(elapsedTime);
+
+  // オブジェクトを回転
+  sphere.rotation.x = elapsedTime;
+  plane.rotation.x = elapsedTime;
+  octahedron.rotation.x = elapsedTime;
+  sphere.rotation.y = elapsedTime;
+  plane.rotation.y = elapsedTime;
+  octahedron.rotation.y = elapsedTime;
+
   //レンダリング
   renderer.render(scene, camera);
-  requestAnimationFrame(() => animate(renderer, scene, camera));
+  requestAnimationFrame(() => animate(renderer, scene, camera, figures));
 };
 
 //ブラウザのリサイズに対応
@@ -60,6 +84,12 @@ const init = () => {
   const plane = new THREE.Mesh(planeGeometry, material);
   const octahedron = new THREE.Mesh(octahedronGeometry, material);
 
+  const figures = {
+    sphere,
+    plane,
+    octahedron,
+  };
+
   // 位置調整
   sphere.position.x = -1.5;
   octahedron.position.x = 1.5;
@@ -71,7 +101,7 @@ const init = () => {
 
   window.addEventListener("resize", () => onWindowResize(renderer, camera));
 
-  animate(renderer, scene, camera);
+  animate(renderer, scene, camera, figures);
 };
 
 window.addEventListener("load", init);
