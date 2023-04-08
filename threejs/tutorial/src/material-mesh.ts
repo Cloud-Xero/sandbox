@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import "./tailwind.css";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+// import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 type Material = THREE.MeshBasicMaterial | THREE.MeshNormalMaterial;
 
@@ -78,7 +78,7 @@ const init = () => {
   const octahedronGeometry = new THREE.OctahedronGeometry(0.5);
 
   // テキスチャ
-  const texture = new THREE.TextureLoader().load("./textures/brick.jpg"); // ファイルは public 内に置くこと
+  // const texture = new THREE.TextureLoader().load("./textures/brick.jpg"); // ファイルは public 内に置くこと
 
   // マテリアル
 
@@ -134,7 +134,7 @@ const init = () => {
   scene.add(sphere, plane, octahedron);
 
   //マウス操作
-  const controls = new OrbitControls(camera, renderer.domElement);
+  // const controls = new OrbitControls(camera, renderer.domElement);
 
   window.addEventListener("resize", () => onWindowResize(renderer, camera));
 
