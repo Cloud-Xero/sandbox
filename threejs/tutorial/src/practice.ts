@@ -79,13 +79,19 @@ const init = () => {
   const texture = new THREE.TextureLoader().load("./textures/brick.jpg"); // ファイルは public 内に置くこと
 
   // マテリアル
-  const material = new THREE.MeshBasicMaterial();
-  material.map = texture;
-  material.color.set("red");
+
+  // MeshBasicMaterial（光源を必要とするマテリアル）
+  // const material = new THREE.MeshBasicMaterial();
+  // material.map = texture;
+  // material.color.set("red");
   // material.wireframe = true;  // ワイヤーフレームが表示される
   // material.side = THREE.DoubleSide; // 裏側にも適用される
-  material.opacity = 0.5;
-  material.transparent = true; // opacityとtransparentで透過させることができる
+  // material.opacity = 0.5;
+  // material.transparent = true; // opacityとtransparentで透過させることができる
+
+  // MeshNormalMaterial（光源を必要としないマテリアル）
+  const material = new THREE.MeshNormalMaterial();
+  material.flatShading = true; // 平坦を表現できる
 
   // メッシュ化
   const sphere = new THREE.Mesh(SphereGeometry, material);
