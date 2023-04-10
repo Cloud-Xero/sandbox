@@ -4,6 +4,9 @@ import Layout from "@layouts/layout.astro";
 
 import { getCollection } from "astro:content";
 
+import { format, formatISO } from "date-fns";
+import { categories } from "@lib/constants";
+
 export async function getStaticPaths({}) {
   const blogPosts = await getCollection("blog");
 
@@ -17,11 +20,32 @@ const { post } = Astro.props;
 const {
   data: { title, pubDate, image, category, description },
 } = post;
+
+const pubDateISO = formatISO(pubDate);
+const pubDateJA = format(pubDate, "yyyy年MM月dd日");
 ---
 
 <Layout pageTitle={title} description={description} pageImg={image}>
   <article>
     <Custompicture src={image} alt="" />
     <h1>{title}</h1>
+
+    <div class="flex-spacebetween">
+      <!-- 投稿日を出力 -->
+      <time datetime={pubDateISO}>{pubDateJA}</time>
+
+      <div class="flex">
+        {
+          category.map((categorySlug: string) => {
+            const categoryName = categories.find(
+              (cat) => cat.categorySlug === categorySlug
+            )?.categoryName;
+            return (
+              <a href={`/blog/category/${categorySlug}`}>{categoryName}</a>
+            );
+          })
+        }
+      </div>
+    </div>
   </article>
 </Layout>
