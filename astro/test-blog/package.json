@@ -17,6 +17,7 @@
     "astro-icon": "^0.8.0",
     "date-fns": "^2.29.3",
     "date-fns-tz": "^2.0.0",
+    "plaiceholder": "^2.5.0",
     "sharp": "^0.31.3"
   }
 }
