@@ -1,0 +1,27 @@
+---
+import Custompicture from "@components/custompicture.astro";
+import Layout from "@layouts/layout.astro";
+
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths({}) {
+  const blogPosts = await getCollection("blog");
+
+  return blogPosts.map((post) => {
+    return { params: { slug: post.slug }, props: { post: post } };
+  });
+}
+
+const { post } = Astro.props;
+
+const {
+  data: { title, pubDate, image, category, description },
+} = post;
+---
+
+<Layout pageTitle={title} description={description} pageImg={image}>
+  <article>
+    <Custompicture src={image} alt="" />
+    <h1>{title}</h1>
+  </article>
+</Layout>
