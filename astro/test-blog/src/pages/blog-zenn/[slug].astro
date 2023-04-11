@@ -10,6 +10,7 @@ import { categories } from "@lib/constants";
 
 import markdownToHtml from "zenn-markdown-html";
 import "zenn-content-css";
+import imgToPicture from "@lib/imgToPicture";
 
 export async function getStaticPaths({}) {
   const blogPosts = await getCollection("blog");
@@ -58,6 +59,8 @@ const pubDateJA = format(pubDate, "yyyy年MM月dd日");
 const html = import.meta.env.PROD
   ? markdownToHtml.default(body)
   : markdownToHtml(body);
+
+const convertedHTML = imgToPicture(html);
 ---
 
 <Layout pageTitle={title} description={description} pageImg={image}>
@@ -84,7 +87,7 @@ const html = import.meta.env.PROD
     </div>
 
     <div class="znc large-space">
-      <Fragment set:html={html} />
+      <Fragment set:html={convertedHTML} />
     </div>
 
     <Pagination {...url} />
