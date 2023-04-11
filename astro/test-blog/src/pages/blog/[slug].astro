@@ -7,6 +7,8 @@ import { getCollection } from "astro:content";
 import { format, formatISO } from "date-fns";
 import { categories } from "@lib/constants";
 
+import "github-markdown-css/github-markdown-light.css";
+
 export async function getStaticPaths({}) {
   const blogPosts = await getCollection("blog");
 
@@ -48,7 +50,7 @@ const pubDateJA = format(pubDate, "yyyy年MM月dd日");
         }
       </div>
     </div>
-    <div>
+    <div class="markdwon-body large-space">
       <Content />
     </div>
   </article>
