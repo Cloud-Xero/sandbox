@@ -19,6 +19,8 @@
     "date-fns-tz": "^2.0.0",
     "github-markdown-css": "^5.2.0",
     "plaiceholder": "^2.5.0",
-    "sharp": "^0.31.3"
+    "sharp": "^0.31.3",
+    "zenn-content-css": "^0.1.141",
+    "zenn-markdown-html": "^0.1.141"
   }
 }
