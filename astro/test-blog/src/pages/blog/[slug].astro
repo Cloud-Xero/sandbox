@@ -16,6 +16,7 @@ export async function getStaticPaths({}) {
 }
 
 const { post } = Astro.props;
+const { Content } = await post.render();
 
 const {
   data: { title, pubDate, image, category, description },
@@ -46,6 +47,9 @@ const pubDateJA = format(pubDate, "yyyy年MM月dd日");
           })
         }
       </div>
+    </div>
+    <div>
+      <Content />
     </div>
   </article>
 </Layout>
