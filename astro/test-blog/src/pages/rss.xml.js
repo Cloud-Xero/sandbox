@@ -1,4 +1,4 @@
-import rss from "@astro/rss";
+import rss from "@astrojs/rss";
 import { getCollection } from "astro:content";
 
 import { siteMeta } from "@lib/constants";
