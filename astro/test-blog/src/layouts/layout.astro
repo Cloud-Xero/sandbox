@@ -16,11 +16,13 @@ const props = Astro.props;
     <Meta {...props} />
   </head>
   <body>
-    <Container>
+    <Container maxWidth="900px">
       <Header />
-      <main>
-        <slot />
-      </main>
+      <Container>
+        <main>
+          <slot />
+        </main>
+      </Container>
       <Footer />
     </Container>
   </body>
