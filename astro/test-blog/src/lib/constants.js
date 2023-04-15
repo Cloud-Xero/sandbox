@@ -1,7 +1,7 @@
 export const siteMeta = {
   siteTitle: "Tech Flow.",
   siteDesc: "Tech Flow の技術ブログサイト",
-  siteUrl: "https://**************",
+  siteUrl: "https://astro-test-blog-peach.vercel.app/",
   siteType: "website",
   siteLocale: "ja_JP",
   siteIcon: "/favicon.svg",
