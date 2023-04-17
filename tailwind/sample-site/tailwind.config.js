@@ -6,6 +6,7 @@ module.exports = {
       colors: {
         body: "#050505",
         "selected-text": "#A3A3FF",
+        theme: "#5c318c",
       },
     },
     fontFamily: {
