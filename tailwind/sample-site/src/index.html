@@ -11,6 +11,13 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <title>Document</title>
   </head>
   <body class="font-poppins bg-body text-white">
@@ -20,7 +27,7 @@
         class="container mx-auto flex justify-between items-center px-8 md:px-14 lg:px-24 w-full"
       >
         <div class="text-lg font-bold">Portfolio Site Name</div>
-        <div class="space-x-12">
+        <div class="space-x-12 hidden md:flex items-center">
           <a
             href="#home"
             class="hover:text-selected-text transition-all duration-300"
@@ -48,7 +55,9 @@
             </button></a
           >
         </div>
-        <div></div>
+        <div class="md:hidden">
+          <i class="fa-solid fa-bars"></i>
+        </div>
       </div>
     </header>
   </body>
