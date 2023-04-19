@@ -13,6 +13,6 @@ resource "google_compute_instance" "default" {
   }
 
   lifecycle {
-    prevent_destroy = true
+    ignore_changes = [name]
   }
 }
