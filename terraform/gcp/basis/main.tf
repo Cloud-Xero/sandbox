@@ -1,5 +1,5 @@
 resource "google_compute_instance" "default" {
-  name         = "test2"
+  name         = "test3"
   machine_type = "e2-medium"
   zone         = "asia-northeast1-b"
   boot_disk {
@@ -13,6 +13,6 @@ resource "google_compute_instance" "default" {
   }
 
   lifecycle {
-    create_before_destroy = true
+    prevent_destroy = true
   }
 }
