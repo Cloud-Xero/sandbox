@@ -4,11 +4,10 @@ data "google_compute_zones" "available" {
 }
 
 resource "google_compute_instance" "default" {
-  count = length(data.google_compute_zones.available.names)
-
-  name         = "test-${count.index}"
+  for_each     = toset(data.google_compute_zones.available.names)
+  name         = "test-${each.key}"
   machine_type = "e2-medium"
-  zone         = data.google_compute_zones.available.names[count.index]
+  zone         = each.value
 
   boot_disk {
     initialize_params {
@@ -23,10 +22,10 @@ resource "google_compute_instance" "default" {
 
 output "instance_names" {
   description = "Names of instances"
-  value       = google_compute_instance.default[*].name
+  value       = values(google_compute_instance.default)[*].name
 }
 
 output "instance_zones" {
   description = "Zone of instances"
-  value       = google_compute_instance.default[*].zone
+  value       = values(google_compute_instance.default)[*].zone
 }
