@@ -4,9 +4,11 @@ data "google_compute_zones" "available" {
 }
 
 resource "google_compute_instance" "default" {
-  name         = "test"
+  count = length(data.google_compute_zones.available.names)
+
+  name         = "test-${count.index}"
   machine_type = "e2-medium"
-  zone         = data.google_compute_zones.available.names[0]
+  zone         = data.google_compute_zones.available.names[count.index]
 
   boot_disk {
     initialize_params {
@@ -17,4 +19,14 @@ resource "google_compute_instance" "default" {
   network_interface {
     network = "default"
   }
+}
+
+output "instance_names" {
+  description = "Names of instances"
+  value       = google_compute_instance.default[*].name
+}
+
+output "instance_zones" {
+  description = "Zone of instances"
+  value       = google_compute_instance.default[*].zone
 }
