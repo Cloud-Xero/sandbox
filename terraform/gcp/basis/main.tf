@@ -22,10 +22,12 @@ resource "google_compute_instance" "default" {
 
 output "instance_names" {
   description = "Names of instances"
-  value       = values(google_compute_instance.default)[*].name
+  value       = [for i in google_compute_instance.default : i.name]
+  # value       = values(google_compute_instance.default)[*].name
 }
 
 output "instance_zones" {
   description = "Zone of instances"
-  value       = values(google_compute_instance.default)[*].zone
+  value       = [for i in google_compute_instance.default : i.zone]
+  # value       = values(google_compute_instance.default)[*].zone
 }
