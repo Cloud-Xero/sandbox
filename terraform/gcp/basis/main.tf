@@ -1,13 +1,12 @@
-data "google_compute_zones" "available" {
-  region = "asia-northeast1"
-  status = "UP"
+variable "node_affinities" {
+  type    = list(object({ key = string, value = string }))
+  default = [{ key = "env", value = "dev" }, { key = "layer", value = "front" }]
 }
 
 resource "google_compute_instance" "default" {
-  for_each     = toset(data.google_compute_zones.available.names)
-  name         = "test-${each.key}"
+  name         = "test"
   machine_type = "e2-medium"
-  zone         = each.value
+  zone         = "asia-northeast1-b"
 
   boot_disk {
     initialize_params {
@@ -18,16 +17,16 @@ resource "google_compute_instance" "default" {
   network_interface {
     network = "default"
   }
+
+  scheduling {
+    dynamic "node_affinities" {
+      for_each = var.node_affinities
+      content {
+        key      = node_affinities.value["key"]
+        operator = "IN"
+        values   = [node_affinities.value["value"]]
+      }
+    }
+  }
 }
 
-output "instance_names" {
-  description = "Names of instances"
-  value       = [for i in google_compute_instance.default : i.name]
-  # value       = values(google_compute_instance.default)[*].name
-}
-
-output "instance_zones" {
-  description = "Zone of instances"
-  value       = [for i in google_compute_instance.default : i.zone]
-  # value       = values(google_compute_instance.default)[*].zone
-}
