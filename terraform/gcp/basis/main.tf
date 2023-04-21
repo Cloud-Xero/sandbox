@@ -1,9 +1,10 @@
-variable "node_affinities" {
-  type    = list(object({ key = string, value = string }))
-  default = [{ key = "env", value = "dev" }, { key = "layer", value = "front" }]
+variable "vm_enable" {
+  type    = bool
+  default = false
 }
-
 resource "google_compute_instance" "default" {
+  count = var.vm_enable ? 1 : 0
+
   name         = "test"
   machine_type = "e2-medium"
   zone         = "asia-northeast1-b"
@@ -17,16 +18,4 @@ resource "google_compute_instance" "default" {
   network_interface {
     network = "default"
   }
-
-  scheduling {
-    dynamic "node_affinities" {
-      for_each = var.node_affinities
-      content {
-        key      = node_affinities.value["key"]
-        operator = "IN"
-        values   = [node_affinities.value["value"]]
-      }
-    }
-  }
 }
-
