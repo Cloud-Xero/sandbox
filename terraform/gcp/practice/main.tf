@@ -10,3 +10,14 @@ resource "google_compute_instance_template" "default" {
     network = "default"
   }
 }
+
+resource "google_compute_region_instance_group_manager" "default" {
+  name   = "default"
+  region = "asia-northeast1"
+  version {
+    instance_template = google_compute_instance_template.default.self_link
+  }
+
+  base_instance_name = "mig"
+  target_size        = 6
+}
