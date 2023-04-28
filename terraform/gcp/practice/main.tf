@@ -46,3 +46,10 @@ resource "google_compute_region_autoscaler" "default" {
     min_replicas = 6
   }
 }
+
+resource "google_compute_health_check" "mig_health_check" {
+  name = "default"
+  http_health_check {
+    port = 80
+  }
+}
