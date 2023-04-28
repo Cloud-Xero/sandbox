@@ -1,5 +1,18 @@
+terraform {
+  required_version = "~> 1.2"
+  required_providers {
+    google = ">= 4.32.0"
+  }
+}
+
+provider "google" {
+  # [YOUR PROJECT]を自身のGCPプロジェクト名に置き換える
+  project = "kouzoh-p-tmp-h-komamiya"
+  zone    = "asia-northeast1-b"
+}
+
 resource "google_compute_instance_template" "default" {
-  name_prefix  = "default"
+  name_prefix  = "default-"
   machine_type = "e2-medium"
 
   disk {
@@ -14,6 +27,7 @@ resource "google_compute_instance_template" "default" {
 resource "google_compute_region_instance_group_manager" "default" {
   name   = "default"
   region = "asia-northeast1"
+
   version {
     instance_template = google_compute_instance_template.default.self_link
   }
