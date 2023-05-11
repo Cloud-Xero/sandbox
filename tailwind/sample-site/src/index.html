@@ -233,7 +233,7 @@
     <!-- お問い合わせ -->
     <div
       id="contact"
-      class="container mt-64 flex justify-between items-center mx-auto px-8 md:px-14 lg:px-24 w-full"
+      class="container mt-52 mb-20 flex justify-between items-center mx-auto px-8 md:px-14 lg:px-24 w-full"
     >
       <section class="w-full">
         <h2 class="secondary-title">お問い合わせ</h2>
@@ -241,7 +241,7 @@
           私はの経歴が気になる方はご一報ください。即時対応します。
         </p>
         <div class="w-full grid lg:grid-cols-2 gap-8 lg:gap-32 mt-16">
-          <div>
+          <div class="space-y-12">
             <div>
               <label for="" class="text-white block mb-6 text-xl font-bold"
                 >お名前</label
@@ -251,6 +251,29 @@
                 class="w-full border border-inputBorder bg-input px-4 py-4"
               />
             </div>
+            <div>
+              <label for="" class="text-white block mb-6 text-xl font-bold"
+                >メールアドレス</label
+              >
+              <input
+                type="email"
+                class="w-full border border-inputBorder bg-input px-4 py-4"
+              />
+            </div>
+            <div>
+              <label for="" class="text-white block mb-6 text-xl font-bold"
+                >メッセージ</label
+              >
+              <input
+                type="text"
+                class="w-full border border-inputBorder bg-input px-4 py-4"
+              />
+            </div>
+            <button
+              class="px-8 py-3 bg-theme font-bold rounded-lg hover:bg-purple-600 transition-all duration-300"
+            >
+              送信
+            </button>
           </div>
         </div>
       </section>
