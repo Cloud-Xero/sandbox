@@ -33,7 +33,17 @@ resource "google_compute_region_instance_group_manager" "default" {
   }
 
   base_instance_name = "mig"
-  target_size        = 6
+  target_size        = null
+
+  auto_healing_policies {
+    health_check      = google_compute_health_check.mig_health_check.self_link
+    initial_delay_sec = 30
+  }
+
+  // Initial instance verification can take 10-15m when a health check is present.
+  timeouts {
+    create = "15m"
+  }
 }
 
 resource "google_compute_region_autoscaler" "default" {
