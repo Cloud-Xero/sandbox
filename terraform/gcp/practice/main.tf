@@ -89,3 +89,9 @@ resource "google_compute_firewall" "default_ssh" {
   source_ranges = ["0.0.0.0/0"]
   target_tags   = ["allow-ssh"]
 }
+
+resource "google_compute_router" "default" {
+  name    = "default"
+  network = "default"
+  region  = "asia-northeast1"
+}
