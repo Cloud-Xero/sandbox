@@ -1,0 +1,35 @@
+$cwhite: white;
+$cblack: black;
+
+#container {
+  text-align: center;
+}
+
+.btn {
+  background-color: $cwhite;
+  color: $cblack;
+  border: 2px solid $cblack;
+  padding: 10px 40px;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 50px 0;
+  transition: all 0.3s;
+
+  &-cube {
+    // background-color: $cblack;
+    &:hover {
+      background-color: $cblack;
+      color: $cwhite;
+    }
+
+    .inner {
+      background-color: $cblack;
+    }
+  }
+
+  &.float {
+    &:hover {
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+  }
+}
