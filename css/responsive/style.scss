@@ -1,9 +1,10 @@
-@media screen and (max-width: 600px) {
-  h1 {
-    color: red;
-  }
+// モバイル用のスタイル
+h1 {
+  color: red;
+  background-color: yellow;
 }
 
+// デスクトップ用のスタイル
 @media screen and (min-width: 601px) {
   h1 {
     color: blue;
