@@ -1,12 +1,24 @@
-// モバイル用のスタイル
 h1 {
-  color: red;
+  color: blue;
   background-color: yellow;
-}
 
-// デスクトップ用のスタイル
-@media screen and (min-width: 601px) {
-  h1 {
-    color: blue;
+  // 480px以上　スマホ横向き
+  @media screen and (min-width: 480px) {
+    color: red;
+  }
+
+  // 600px以上　タブレット縦向き
+  @media screen and (min-width: 600px) {
+    color: purple;
+  }
+
+  // 960px以上　ノートPC等
+  @media screen and (min-width: 960px) {
+    color: green;
+  }
+
+  // 1280px以上　デスクトップPC
+  @media screen and (min-width: 1280px) {
+    color: orange;
   }
 }
