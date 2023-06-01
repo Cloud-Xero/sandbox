@@ -15,12 +15,24 @@ resource "google_compute_instance_template" "default" {
   name_prefix  = "default-"
   machine_type = "e2-medium"
 
+  metadata_startup_script = file("./gceme.sh.tpl")
+
+  tags = ["allow-ssh", "allow-service"]
+  labels = {
+    "key" = "value"
+  }
+
   disk {
     source_image = "debian-cloud/debian-11"
   }
 
+  service_account {
+    scopes = ["cloud-platform"]
+  }
+
   network_interface {
-    network = "default"
+    network    = "default"
+    subnetwork = "default"
   }
 }
 
