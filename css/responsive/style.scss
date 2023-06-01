@@ -1,24 +1,37 @@
+$breakpoints: (
+  // 480px以上　スマホ横向き
+  "sm": "(min-width: 480px)",
+  // 600px以上　タブレット縦向き
+  "md": "(min-width: 600px)",
+  // 960px以上　ノートPC等
+  "lg": "(min-width: 960px)",
+  // 1280px以上　デスクトップPC
+  "xl": "(min-width: 1290px)"
+);
+
+@mixin mq($breakpoint: md) {
+  @media #{map-get($breakpoints, $breakpoint)} {
+    @content;
+  }
+}
+
 h1 {
   color: blue;
   background-color: yellow;
 
-  // 480px以上　スマホ横向き
-  @media screen and (min-width: 480px) {
+  @include mq(sm) {
     color: red;
   }
 
-  // 600px以上　タブレット縦向き
-  @media screen and (min-width: 600px) {
+  @include mq(md) {
     color: purple;
   }
 
-  // 960px以上　ノートPC等
-  @media screen and (min-width: 960px) {
+  @include mq(lg) {
     color: green;
   }
 
-  // 1280px以上　デスクトップPC
-  @media screen and (min-width: 1280px) {
+  @include mq(xl) {
     color: orange;
   }
 }
