@@ -1,5 +1,6 @@
 #container {
-  margin: 0 auto;
+  padding: 1rem;
+  background-color: gray;
 }
 
 div {
@@ -9,11 +10,19 @@ div {
   width: 150px;
   height: 150px;
   box-shadow: 7px 7px 0 0 #000;
-  margin: 0 auto;
 }
 
 .div-1 {
-  background-color: orange;
-  top: 10px;
-  left: 10px;
+  background: orange;
+}
+.div-2 {
+  background: tomato;
+}
+.div-3 {
+  background: teal;
+}
+.div-4 {
+  width: 80px;
+  height: 80px;
+  background-color: violet;
 }
