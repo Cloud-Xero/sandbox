@@ -1,21 +1,55 @@
 import Chart, { ChartConfiguration } from "chart.js/auto";
+import { SHINDO, earthquakeData } from "./earthquakeData";
 
 // Define chart configuration
 const chartConfig: ChartConfiguration<"bar", number[], string> = {
   type: "bar",
   data: {
-    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+    labels: [...earthquakeData.map((data) => data.period)],
+    // datasets: [
+    //   {
+    //     label: SHINDO.SHINDO_4,
+    //     data: [
+    //       ...earthquakeData.map((data) => data.intensities[SHINDO.SHINDO_4]),
+    //     ],
+    //     borderWidth: 1,
+    //   },
+    //   {
+    //     label: SHINDO.SHINDO_5_WEAK,
+    //     data: [
+    //       ...earthquakeData.map(
+    //         (data) => data.intensities[SHINDO.SHINDO_5_WEAK]
+    //       ),
+    //     ],
+    //     borderWidth: 1,
+    //   },
+    //   {
+    //     label: SHINDO.SHINDO_5_STRONG,
+    //     data: [
+    //       ...earthquakeData.map(
+    //         (data) => data.intensities[SHINDO.SHINDO_5_STRONG]
+    //       ),
+    //     ],
+    //     borderWidth: 1,
+    //   },
+    // ],
     datasets: [
-      {
-        label: "# of Votes",
-        data: [12, 19, 3, 5, 2, 3],
-        borderWidth: 1,
-      },
+      ...Object.values(SHINDO).map((v) => {
+        return {
+          label: v,
+          data: [...earthquakeData.map((data) => data.intensities[v])],
+          borderWidth: 1,
+        };
+      }),
     ],
   },
   options: {
     scales: {
+      x: {
+        stacked: true,
+      },
       y: {
+        stacked: true,
         beginAtZero: true,
       },
     },
