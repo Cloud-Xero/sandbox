@@ -7,31 +7,31 @@ const chartConfig: ChartConfiguration<"bar", number[], string> = {
   data: {
     labels: [...earthquakeData.map((data) => data.period)],
     // datasets: [
-    //   {
-    //     label: SHINDO.SHINDO_4,
-    //     data: [
-    //       ...earthquakeData.map((data) => data.intensities[SHINDO.SHINDO_4]),
-    //     ],
-    //     borderWidth: 1,
-    //   },
-    //   {
-    //     label: SHINDO.SHINDO_5_WEAK,
-    //     data: [
-    //       ...earthquakeData.map(
-    //         (data) => data.intensities[SHINDO.SHINDO_5_WEAK]
-    //       ),
-    //     ],
-    //     borderWidth: 1,
-    //   },
-    //   {
-    //     label: SHINDO.SHINDO_5_STRONG,
-    //     data: [
-    //       ...earthquakeData.map(
-    //         (data) => data.intensities[SHINDO.SHINDO_5_STRONG]
-    //       ),
-    //     ],
-    //     borderWidth: 1,
-    //   },
+    // {
+    //   label: SHINDO.SHINDO_4,
+    //   data: [
+    //     ...earthquakeData.map((data) => data.intensities[SHINDO.SHINDO_4]),  // [3, 85, 91...]
+    //   ],
+    //   borderWidth: 1,
+    // },
+    // {
+    //   label: SHINDO.SHINDO_5_WEAK,
+    //   data: [
+    //     ...earthquakeData.map(
+    //       (data) => data.intensities[SHINDO.SHINDO_5_WEAK]
+    //     ),
+    //   ],
+    //   borderWidth: 1,
+    // },
+    // {
+    //   label: SHINDO.SHINDO_5_STRONG,
+    //   data: [
+    //     ...earthquakeData.map(
+    //       (data) => data.intensities[SHINDO.SHINDO_5_STRONG]
+    //     ),
+    //   ],
+    //   borderWidth: 1,
+    // },
     // ],
     datasets: [
       ...Object.values(SHINDO).map((v) => {
@@ -66,7 +66,7 @@ const generateChart = (
     chart.destroy();
   }
   const ctx = document.getElementById("myChart") as HTMLCanvasElement;
-  chart = new Chart(ctx!, config);
+  chart = new Chart(ctx, config);
 
   return chart;
 };
