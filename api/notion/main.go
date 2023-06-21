@@ -25,20 +25,6 @@ func createAPIURL(baseURL, databaseID string) string {
 	return fmt.Sprintf("%s/databases/%s", baseURL, databaseID) // 指定したフォーマット（%sを後続の引数に置き換えて）文字列を生成
 }
 
-// DB情報を取得するHTTPリクエストを作成
-func createRequestDBInfo(apiURL string) *http.Request {
-	req, err := http.NewRequest("GET", apiURL, nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// HTTPリクエストヘッダーにNotionのAPIキーとバージョンを設定する
-	req.Header.Add("Authorization", "Bearer "+os.Getenv("NOTION_API_KEY"))
-	req.Header.Add("Notion-Version", "2022-06-28")
-
-	return req
-}
-
 // HTTPリクエストを実行
 func doRequest(req *http.Request) *http.Response {
 	client := &http.Client{Timeout: time.Second * 10}
@@ -84,7 +70,7 @@ func main() {
 	databaseID := os.Getenv("DATABASE_ID")
 	apiURL := createAPIURL(notionAPIBase, databaseID)
 
-	req := createRequestDBInfo(apiURL)
+	req := CreateRequestDBInfo(apiURL)
 	resp := doRequest(req)
 
 	processResponse(resp)
