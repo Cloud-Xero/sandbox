@@ -12,6 +12,20 @@ import (
 	"github.com/joho/godotenv"
 )
 
+type ResponseData struct {
+	Results []struct {
+		Properties struct {
+			Name struct {
+				Title []struct {
+					Text struct {
+						Content string `json:"content"`
+					} `json:"text"`
+				} `json:"title"`
+			} `json:"Name"`
+		} `json:"properties"`
+	} `json:"results"`
+}
+
 // .envファイルから環境変数を読み込む
 func loadEnv() {
 	err := godotenv.Load()
@@ -47,16 +61,24 @@ func processResponse(resp *http.Response) {
 	}
 
 	// JSONをGoのデータ構造に変換する
-	var result interface{}
-	json.Unmarshal(body, &result)
+	var data ResponseData
+	// var data interface{}
+	json.Unmarshal(body, &data)
 
-	// Goのデータ構造を、整形したJSON文字列に変換する
-	formatted, err := json.MarshalIndent(result, "", "  ")
-	if err != nil {
-		log.Fatal(err)
+	for i, result := range data.Results {
+		if len(result.Properties.Name.Title) > 0 {
+			content := result.Properties.Name.Title[0].Text.Content
+			fmt.Printf("Content of the first title in result %d: %s\n", i, content)
+		}
 	}
 
-	fmt.Println(string(formatted))
+	// Goのデータ構造を、整形したJSON文字列に変換する
+	// formatted, err := json.MarshalIndent(data, "", "  ")
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// fmt.Println(string(formatted))
 }
 
 /*
