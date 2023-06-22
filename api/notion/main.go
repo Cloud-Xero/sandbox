@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"sort"
 	"time"
 
 	"github.com/joho/godotenv"
@@ -65,11 +66,21 @@ func processResponse(resp *http.Response) {
 	// var data interface{}
 	json.Unmarshal(body, &data)
 
-	for i, result := range data.Results {
+	contents := make([]string, 0, len(data.Results))
+
+	// サイズと容量をあらかじめ指定したスライスを作成
+	for _, result := range data.Results {
 		if len(result.Properties.Name.Title) > 0 {
 			content := result.Properties.Name.Title[0].Text.Content
-			fmt.Printf("Content of the first title in result %d: %s\n", i, content)
+			contents = append(contents, content)
 		}
+	}
+
+	// 文字列のスライスソート
+	sort.Strings(contents)
+
+	for i, content := range contents {
+		fmt.Printf("Content %d: %s\n", i, content)
 	}
 
 	// Goのデータ構造を、整形したJSON文字列に変換する
