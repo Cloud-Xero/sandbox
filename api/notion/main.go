@@ -103,9 +103,6 @@ func main() {
 	databaseID := os.Getenv("DATABASE_ID")
 	apiURL := createAPIURL(notionAPIBase, databaseID)
 
-	// req := CreateRequestDBInfo(apiURL)
-	// req := CreateRequestAllItems(apiURL)
-	// req := CreateRequestFilteredItems(apiURL)
 	req := CreatedRequestMultiFilteredItems(apiURL)
 	resp := doRequest(req)
 
