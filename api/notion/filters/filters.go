@@ -68,9 +68,10 @@ func main() {
 	databaseID := os.Getenv("DATABASE_ID")
 	apiURL := "https://api.notion.com/v1/databases/" + databaseID + "/query"
 
-	// var statusNotStarted = "Not Started"
-	var statusDone = "Done"
-	var statusWait = "Wait"
+	// statusNotStarted := "Not Started"
+	statusDone := "Done"
+	statusWait := "Wait"
+	selectedWeek := "6/15 ~ 6/21"
 
 	filter := Filter{
 		Or: &[]Filter{
@@ -79,13 +80,13 @@ func main() {
 					{
 						Property: "Status",
 						Status: &Status{
-							NotEquals: &statusDone,
+							Equals: &statusDone,
 						},
 					},
 					{
 						Property: "Week",
 						Select: &Select{
-							Equals: "6/15 ~ 6/21",
+							Equals: selectedWeek,
 						},
 					},
 				},
@@ -95,13 +96,13 @@ func main() {
 					{
 						Property: "Status",
 						Status: &Status{
-							NotEquals: &statusWait,
+							Equals: &statusWait,
 						},
 					},
 					{
 						Property: "Week",
 						Select: &Select{
-							Equals: "6/22 ~ 6/30",
+							Equals: selectedWeek,
 						},
 						// MultiSelect: &MultiSelect{
 						// 	Contains: &selectedWeek,
