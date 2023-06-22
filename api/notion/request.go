@@ -8,28 +8,39 @@ import (
 	"os"
 )
 
+type Filter struct {
+	And *[]FilterCondition `json:"and,omitempty"`
+	// Or  *[]FilterCondition `json:"or,omitempty"`
+	Or *[]Filter `json:"or,omitempty"`
+}
 type FilterCondition struct {
-	Property string  `json:"property"`
-	Status   *Status `json:"status,omitempty"` // オプショナル
-	Select   *Select `json:"select,omitempty"` // オプショナル
+	Property    string       `json:"property"`
+	Status      *Status      `json:"status,omitempty"`       // オプショナル（ステータス）
+	Select      *Select      `json:"select,omitempty"`       // オプショナル（セレクトボックス）
+	MultiSelect *MultiSelect `json:"multi_select,omitempty"` // オプショナル（マルチセレクトボックス）
 }
 
 type Status struct {
-	Equals string `json:"equals"`
+	Equals    *string `json:"equals,omitempty"`         // オプショナル
+	NotEquals *string `json:"does_not_equal,omitempty"` // オプショナル
 }
 
 type Select struct {
 	Equals string `json:"equals"`
 }
 
-type Filter struct {
-	And *[]FilterCondition `json:"and,omitempty"`
-	Or  *[]FilterCondition `json:"or,omitempty"`
+type MultiSelect struct {
+	Contains       *string `json:"contains,omitempty"`         // オプショナル
+	DoesNotContain *string `json:"does_not_contain,omitempty"` // オプショナル
 }
 
 type RequestBody struct {
 	Filter Filter `json:"filter"`
 }
+
+var statusNotStarted = "Not Started"
+var statusDone = "Done"
+var statusWait = "Wait"
 
 func setRequestHeader(req *http.Request) *http.Request {
 	// HTTPリクエストヘッダーにNotionのAPIキーとバージョンを設定する
@@ -66,7 +77,7 @@ func CreateRequestFilteredItems(apiURL string) *http.Request {
 			{
 				Property: "Status",
 				Status: &Status{
-					Equals: "Not started",
+					Equals: &statusNotStarted,
 				},
 			},
 		},
@@ -92,18 +103,42 @@ func CreateRequestFilteredItems(apiURL string) *http.Request {
 
 // 複数条件でフィルター付きアイテム取得するHTTPリクエストを作成
 func CreatedRequestMultiFilteredItems(apiURL string) *http.Request {
+
 	filter := Filter{
-		And: &[]FilterCondition{
+		Or: &[]Filter{
 			{
-				Property: "Status",
-				Status: &Status{
-					Equals: "Not started",
+				And: &[]FilterCondition{
+					{
+						Property: "Status",
+						Status: &Status{
+							NotEquals: &statusDone,
+						},
+					},
+					{
+						Property: "Week",
+						Select: &Select{
+							Equals: "6/15 ~ 6/21",
+						},
+					},
 				},
 			},
 			{
-				Property: "Category",
-				Select: &Select{
-					Equals: "Business",
+				And: &[]FilterCondition{
+					{
+						Property: "Status",
+						Status: &Status{
+							NotEquals: &statusWait,
+						},
+					},
+					{
+						Property: "Week",
+						Select: &Select{
+							Equals: "6/22 ~ 6/30",
+						},
+						// MultiSelect: &MultiSelect{
+						// 	Contains: &selectedWeek,
+						// },
+					},
 				},
 			},
 		},
