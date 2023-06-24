@@ -9,4 +9,4 @@ run_filter:
 run_filters:
 	go run filters/filters.go
 run_update:
-	go run update/update.go
+	go run update/*.go
