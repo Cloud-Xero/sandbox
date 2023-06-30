@@ -9,6 +9,8 @@ import (
 	"net/http"
 	"os"
 	"sort"
+
+	"github.com/joho/godotenv"
 )
 
 type Filter struct {

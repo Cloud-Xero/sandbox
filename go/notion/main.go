@@ -9,6 +9,8 @@ import (
 	"os"
 	"sort"
 	"time"
+
+	"github.com/joho/godotenv"
 )
 
 type ResponseData struct {
