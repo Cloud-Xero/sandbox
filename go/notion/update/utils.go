@@ -9,12 +9,12 @@ import (
 
 // HTTPリクエストを実行
 func DoRequest(req *http.Request) *http.Response {
-	client := &http.Client{Timeout: time.Second * 10}
+	client := &http.Client{Timeout: time.Second * 30}
 	resp, err := client.Do(req)
-	fmt.Println(resp.StatusCode)
 	if err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println(resp.StatusCode)
 
 	return resp
 }
