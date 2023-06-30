@@ -7,8 +7,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-
-	"github.com/joho/godotenv"
 )
 
 // DB情報を取得するHTTPリクエストを作成（アイテム名なし）
