@@ -8,4 +8,9 @@
    ```bash
    $ npm install
    ```
-3.
+3. install threejs
+   ```bash
+   $ npm install --save three
+   ```
+4.
+5.
