@@ -1,16 +1,20 @@
 ## Setup
 
-1. setup vite project
+1. create package.json
+   ```bash
+   $ npm init -y
+   ```
+2. setup vite project
    ```bash
    $ npm create vite@latest
    ```
-2. install packages
+3. install packages
    ```bash
    $ npm install
    ```
-3. install threejs
+4. install threejs
    ```bash
    $ npm install --save three
    ```
-4.
 5.
+6.
