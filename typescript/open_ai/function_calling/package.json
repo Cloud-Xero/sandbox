@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "tsc": "tsc",
-    "ts-node": "ts-node --esm"
+    "ts-node": "ts-node --esm",
+    "start": "tsc && node index.js"
   },
   "keywords": [],
   "author": "",
