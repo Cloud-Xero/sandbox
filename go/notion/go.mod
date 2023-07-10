@@ -1,4 +1,4 @@
-module notionapi
+module notion
 
 go 1.20
 
