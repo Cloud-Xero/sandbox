@@ -11,16 +11,27 @@ document.body.appendChild(renderer.domElement);
 const geometry = new THREE.TorusGeometry(7, 3, 200, 20);
 const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
 
-const plane = new THREE.Mesh(geometry, material);
+const mesh = new THREE.Mesh(geometry, material);
 
-scene.add(plane);
+scene.add(mesh);
 
-new OrbitControls(camera, renderer.domElement);
+const axis = new THREE.AxesHelper(20); // 引数は軸の長さ
+scene.add(axis);
+
+new OrbitControls(camera, renderer.domElement); // マウスで物体を動かせるようにする
 
 camera.position.z = 30;
 
 function animate() {
   requestAnimationFrame(animate);
+
+  // 回転
+  // mesh.rotation.x += 0.01;  // mesh.rotateX(0.01)でも同様）
+  // mesh.rotation.y += 0.01;  // Y軸方向に回転
+
+  // 平行移動
+  mesh.position.x += 0.02;
+
   renderer.render(scene, camera);
 }
 animate();
