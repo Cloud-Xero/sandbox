@@ -4,26 +4,52 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({
+  antialias: true,
+});
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setClearColor(0xf3f3f3);
 document.body.appendChild(renderer.domElement);
 
-const geometry1 = new THREE.BoxGeometry(10, 10, 10);
-const geometry2 = new THREE.PlaneGeometry(20, 20);
-const geometry3 = new THREE.TorusGeometry(10, 3, 200, 20);
+const POS_RANGE = 100;
+const MAX_SCALE = 1.5;
 
-const material1 = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-const material2 = material1.clone();
-material2.color = new THREE.Color(0x00ff00);
-const material3 = material1.clone();
-material3.color = new THREE.Color(0x0000ff);
+// ランダムな値を生成する関数(範囲を引数)
+const mapRand = (min: number, max: number, isInt = false) => {
+  const rand = Math.random() * (max - min) + min;
+  return isInt ? Math.round(rand) : rand;
+};
 
-const mesh1 = new THREE.Mesh(geometry1, material1);
-mesh1.position.x -= 25;
-const mesh2 = new THREE.Mesh(geometry2, material2);
-mesh2.position.x += 25;
-const mesh3 = new THREE.Mesh(geometry3, material3);
-scene.add(mesh1, mesh2, mesh3);
+// ランダムにメッシュを生成する関数
+const randomMesh = () => {
+  const geometries = [
+    new THREE.BoxGeometry(10, 10, 10),
+    new THREE.PlaneGeometry(20, 20),
+    new THREE.TorusGeometry(10, 3, 200, 20),
+  ];
+
+  const color = new THREE.Color(mapRand(0.7, 1), mapRand(0.7, 1), mapRand(0.7, 1));
+  const pos = {
+    x: mapRand(-POS_RANGE, POS_RANGE),
+    y: mapRand(-POS_RANGE, POS_RANGE),
+    z: mapRand(-POS_RANGE, POS_RANGE),
+  };
+  const material = new THREE.MeshBasicMaterial({ color });
+  const gIndex = mapRand(0, geometries.length - 1, true);
+
+  const mesh = new THREE.Mesh(geometries[gIndex], material);
+  mesh.position.set(pos.x, pos.y, pos.z);
+
+  const scale = mapRand(1, MAX_SCALE);
+  mesh.geometry.scale(scale, scale, scale);
+
+  return mesh;
+};
+
+const meshes = [...new Array(50)].map(() => {
+  return randomMesh();
+});
+scene.add(...meshes);
 
 const axis = new THREE.AxesHelper(20); // 引数は軸の長さ
 scene.add(axis);
@@ -34,12 +60,6 @@ camera.position.z = 50;
 
 function animate() {
   requestAnimationFrame(animate);
-
-  // 回転
-  mesh1.rotation.x += 0.01;
-  mesh1.rotation.y += 0.01;
-  mesh2.rotation.z += 0.01;
-  mesh3.rotation.y += 0.01;
 
   renderer.render(scene, camera);
 }
