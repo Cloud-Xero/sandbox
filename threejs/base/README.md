@@ -16,5 +16,8 @@
    ```bash
    $ npm install --save three
    ```
-5.
+5. install @types/three
+   ```bash
+   $ npm i --save-dev @types/three
+   ```
 6.
