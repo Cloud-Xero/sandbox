@@ -26,11 +26,18 @@ function animate() {
   requestAnimationFrame(animate);
 
   // 回転
-  // mesh.rotation.x += 0.01;  // mesh.rotateX(0.01)でも同様）
+  // mesh.rotation.x += 0.01;  // mesh.rotateX(0.01)でも同様
   // mesh.rotation.y += 0.01;  // Y軸方向に回転
 
   // 平行移動
   mesh.position.x += 0.02;
+  // mesh.position.set(10, 0, 0);
+  // geometry.translate(0.01, 0.01, 0.01);
+
+  // スケール
+  mesh.scale.x = 1.1;
+  // mesh.scale.x += 0.01;
+  // geometry.scale(1.2, 1, 1);
 
   renderer.render(scene, camera);
 }
