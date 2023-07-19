@@ -1,0 +1,41 @@
+name: "Deploy a Cloud Function"
+on:
+  push:
+    branches: [master]
+
+# ワークフローに定義するジョブを設定
+jobs:
+  # 「deploy」と言う名前のジョブを定義
+  deploy:
+    name: "Deploy Functions"
+    # ビルドやデプロイを実行するイメージを指定（ここでは Ubuntu の最新版環境内で処理を実行することを指定）
+    runs-on: "ubuntu-latest"
+    permissions:
+      contents: "read"
+      id-token: "write"
+    # env:  # 環境変数
+    #   REGION: asia-northeast1  # デプロイするGCPのリージョン
+    #   ENTRY_POINT: autoDeploy  # エントリーポイントとなる関数名
+    #   TOPIC: # トリガーとなる PubSub のトピックID
+
+    # 実行する処理やコマンドを指定する
+    steps:
+      # リポジトリからのチェックアウトを行う「action/checkout」アクションを実行する
+      - uses: "actions/checkout@v2"
+
+      - id: "auth"
+        uses: "google-github-actions/auth@v0.4.0"
+        with:
+          workload_identity_provider: "projects/91307940393/locations/global/workloadIdentityPools/gh-pool/providers/gh-oidc-pool"
+          service_account: "ci-deploy@enduring-lane-339205.iam.gserviceaccount.com"
+
+      - id: "deploy"
+        uses: "google-github-actions/deploy-cloud-functions@v0"
+        with:
+          name: "function-github_actions" # GCF上での関数名
+          runtime: "nodejs16" # runtimeの設定
+          source_dir: "src"
+          # credentials: ${{ secrets.gcp_credentials }} # GCPの鍵（非推奨）
+          entry_point: "helloWorld" # GCFにデプロイする関数名
+          region: "asia-northeast1" # regionの指定
+          project_id: "enduring-lane-339205"
