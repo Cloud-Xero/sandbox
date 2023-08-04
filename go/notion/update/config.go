@@ -17,16 +17,16 @@ func CommonConstants() (string, string) {
 
 // Weekly用定数
 func WeeklyConstants() (string, string) {
-	lastWeek := "7/15 ~ 7/21"
-	thisWeek := "7/22 ~ 7/31"
+	lastWeek := "7/22 ~ 7/31"
+	thisWeek := "8/1 ~ 8/7"
 
 	return lastWeek, thisWeek
 }
 
 // Monthly用定数
 func MonthlyConstants() (string, string) {
-	lastMonth := "June"
-	thisMonth := "July"
+	lastMonth := "July"
+	thisMonth := "August"
 
 	return lastMonth, thisMonth
 }
