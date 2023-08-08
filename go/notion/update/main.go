@@ -3,7 +3,7 @@ package main
 func main() {
 
 	// monthlyFlagがtrueの時、月次処理
-	monthlyFlag := true
+	monthlyFlag := false
 
 	// 各種定数を取得
 	status1, status2 := CommonConstants()

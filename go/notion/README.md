@@ -1,9 +1,13 @@
+※ open go folder and `cd notion`
+
 #### Weekly
 
 1. Update main.go
+
    ```go
    monthlyFlag := false
    ```
+
 2. Update config.go
 
    ```go
@@ -16,6 +20,7 @@
    ```
 
 3. Execute the following command
+
    ```bash
    $ make run_update
    ```
@@ -23,9 +28,11 @@
 #### Monthly
 
 1. Update main.go
+
    ```go
    monthlyFlag := true
    ```
+
 2. Update config.go
 
    ```go
@@ -38,6 +45,7 @@
    ```
 
 3. Execute the following command
+
    ```bash
    $ make run_update
    ```
