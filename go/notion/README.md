@@ -49,3 +49,13 @@
    ```bash
    $ make run_update
    ```
+
+---
+
+## ToDo
+
+- [ ] Change the color of weekly label
+  - [ ] Light Gray → Yellow
+  - [ ] Yellow → Gray
+- [ ] Deal rate limit
+- [ ] create UI
