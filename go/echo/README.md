@@ -18,3 +18,11 @@ use (
 )
 
 ```
+
+## Execute
+
+```bash
+$ go run sample.go
+```
+
+Then, access to [http://localhost:1323/](http://localhost:1323/)
