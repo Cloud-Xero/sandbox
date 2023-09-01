@@ -58,4 +58,6 @@
   - [ ] Light Gray → Yellow
   - [ ] Yellow → Gray
 - [ ] Deal rate limit
-- [ ] create UI
+- [ ] Update Date
+- [ ] Create UI
+- [ ] Use Framework (ex. Echo)
