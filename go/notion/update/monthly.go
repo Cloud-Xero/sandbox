@@ -9,7 +9,7 @@ import (
 	"sort"
 )
 
-func getMonthRequestBody(status1, status2, lastMonth string) RequestBody {
+func getMonthRequestBody() RequestBody {
 	filter := Filter{
 		And: &[]Filter{
 			{
@@ -17,7 +17,7 @@ func getMonthRequestBody(status1, status2, lastMonth string) RequestBody {
 					{
 						Property: "Month",
 						Select: &Select{
-							Equals: lastMonth,
+							Equals: LAST_MONTH,
 						},
 					},
 				},
@@ -27,13 +27,13 @@ func getMonthRequestBody(status1, status2, lastMonth string) RequestBody {
 					{
 						Property: "Status",
 						Status: &Status{
-							Equals: &status1,
+							Equals: &STATUS_NOT,
 						},
 					},
 					{
 						Property: "Status",
 						Status: &Status{
-							Equals: &status2,
+							Equals: &STATUS_PROGRESS,
 						},
 					},
 				},
@@ -48,9 +48,9 @@ func getMonthRequestBody(status1, status2, lastMonth string) RequestBody {
 	return reqBody
 }
 
-func GetSelectedMonthData(status1, status2, lastMonth string) ResponseData {
+func GetSelectedMonthData() ResponseData {
 
-	reqBody := getMonthRequestBody(status1, status2, lastMonth)
+	reqBody := getMonthRequestBody()
 
 	// Goの構造体をHTTPリクエストのボディ（JSON形式）として送信可能な形に変換
 	jsonBody, err := json.Marshal(reqBody)
@@ -103,7 +103,7 @@ func GetSelectedMonthData(status1, status2, lastMonth string) ResponseData {
 }
 
 // 先月データを今月データに変更
-func UpdateSelectedMonthData(body ResponseData, thisMonth string) {
+func UpdateSelectedMonthData(body ResponseData) {
 
 	for _, page := range body.Results {
 		pageID := page.ID
@@ -112,7 +112,7 @@ func UpdateSelectedMonthData(body ResponseData, thisMonth string) {
 			Properties: map[string]interface{}{
 				"Month": map[string]interface{}{
 					"select": map[string]interface{}{
-						"name": thisMonth,
+						"name": THIS_MONTH,
 					},
 				},
 			},
@@ -121,7 +121,7 @@ func UpdateSelectedMonthData(body ResponseData, thisMonth string) {
 		// GoのデータをJSON形式のバイト配列にエンコード
 		jsonUpdateBody, _ := json.Marshal(updateReqBody)
 
-		updateURL := "https://api.notion.com/v1/pages/" + pageID
+		updateURL := PAGES_ENDPOINT + pageID
 		updateReq, _ := http.NewRequest("PATCH", updateURL, bytes.NewBuffer(jsonUpdateBody))
 
 		// header変数を使用してリクエストヘッダを設定

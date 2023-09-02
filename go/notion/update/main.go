@@ -9,8 +9,8 @@ func main() {
 
 		// Monthly Execution
 		// UpdateSelectedMonthlyColor()
-		res := GetSelectedMonthData(STATUS_NOT, STATUS_PROGRESS, LAST_MONTH)
-		UpdateSelectedMonthData(res, THIS_MONTH)
+		res := GetSelectedMonthData()
+		UpdateSelectedMonthData(res)
 	}
 
 	// Weekly Execution
