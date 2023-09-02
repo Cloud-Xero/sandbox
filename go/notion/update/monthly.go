@@ -149,7 +149,7 @@ func UpdateSelectedMonthData(body ResponseData) {
 
 // 色を更新する
 func UpdateSelectedMonthlyColor() {
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/%s", DATABASE_ENDPOINT, DATABASE_ID), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s%s", DATABASE_ENDPOINT, DATABASE_ID), nil)
 	if err != nil {
 		panic(err)
 	}
