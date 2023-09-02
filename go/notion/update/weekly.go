@@ -170,15 +170,30 @@ func UpdateSelectedWeeklyColor() {
 		panic(err)
 	}
 
+	rawProperties, hasProperties := databaseData["properties"]
+	if !hasProperties || rawProperties == nil {
+		panic("No properties found in database data")
+	}
+
+	properties, ok := rawProperties.(map[string]interface{})
+	if !ok {
+		panic("Failed to convert properties to map")
+	}
+
 	// カラム名が「Week」のセレクトを取得
-	properties := databaseData["properties"].(map[string]interface{})
 	selectProperty, ok := properties[SELECT_WEEK_NAME].(map[string]interface{})
 	if !ok {
 		panic(fmt.Errorf("%s is not a select property", SELECT_WEEK_NAME))
 	}
 
+	// optionsプロパティはselectプロパティ内に存在する
+	selectData, ok := selectProperty["select"].(map[string]interface{})
+	if !ok {
+		panic(fmt.Errorf("%s does not have 'select' key", SELECT_WEEK_NAME))
+	}
+
 	// 取得したセレクトに含まれるオプションを全て取得
-	options, ok := selectProperty["options"].([]interface{})
+	options, ok := selectData["options"].([]interface{})
 	if !ok {
 		panic(fmt.Errorf("%s does not have options", SELECT_WEEK_NAME))
 	}
@@ -187,11 +202,57 @@ func UpdateSelectedWeeklyColor() {
 	for _, option := range options {
 		opt := option.(map[string]interface{})
 
+		// colorが変更されたかどうかをトラックするフラグ
+		changed := false
+
 		switch opt["name"].(string) {
 		case LAST_WEEK:
 			opt["color"] = LAST_COLOR
+			changed = true
 		case THIS_WEEK:
 			opt["color"] = THIS_COLOR
+			changed = true
+		}
+
+		// 色が変更された場合、その変更をNotionに送信する
+		if changed {
+
+			updateReqBody := UpdateRequest{
+				Properties: map[string]interface{}{
+					SELECT_WEEK_NAME: map[string]interface{}{
+						"select": map[string]interface{}{
+							"name":  opt["name"].(string),
+							"color": opt["color"].(string),
+						},
+					},
+				},
+			}
+
+			// GoのデータをJSON形式のバイト配列にエンコード
+			jsonUpdateBody, _ := json.Marshal(updateReqBody)
+
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			req, err := http.NewRequest("PATCH", fmt.Sprintf("%s%s", DATABASE_ENDPOINT, DATABASE_ID), bytes.NewBuffer(jsonUpdateBody))
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			// header変数を使用してリクエストヘッダを設定
+			header := GetRequestHeader()
+			for key, value := range header {
+				req.Header.Set(key, value)
+			}
+
+			fmt.Println(req)
+
+			// HTTPリクエスト実行
+			res := DoRequest(req)
+
+			defer res.Body.Close()
+
 		}
 	}
 }
