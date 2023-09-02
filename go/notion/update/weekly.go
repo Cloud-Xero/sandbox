@@ -9,7 +9,7 @@ import (
 	"sort"
 )
 
-func getWeekRequestBody(status1, status2, lastWeek string) RequestBody {
+func getWeekRequestBody() RequestBody {
 	filter := Filter{
 		And: &[]Filter{
 			{
@@ -17,7 +17,7 @@ func getWeekRequestBody(status1, status2, lastWeek string) RequestBody {
 					{
 						Property: "Week",
 						Select: &Select{
-							Equals: lastWeek,
+							Equals: LAST_WEEK,
 						},
 					},
 				},
@@ -27,13 +27,13 @@ func getWeekRequestBody(status1, status2, lastWeek string) RequestBody {
 					{
 						Property: "Status",
 						Status: &Status{
-							Equals: &status1,
+							Equals: &STATUS_NOT,
 						},
 					},
 					{
 						Property: "Status",
 						Status: &Status{
-							Equals: &status2,
+							Equals: &STATUS_PROGRESS,
 						},
 					},
 				},
@@ -48,9 +48,9 @@ func getWeekRequestBody(status1, status2, lastWeek string) RequestBody {
 	return reqBody
 }
 
-func GetSelectedWeekData(status1, status2, lastWeek string) ResponseData {
+func GetSelectedWeekData() ResponseData {
 
-	reqBody := getWeekRequestBody(status1, status2, lastWeek)
+	reqBody := getWeekRequestBody()
 
 	// Goの構造体をHTTPリクエストのボディ（JSON形式）として送信可能な形に変換
 	jsonBody, err := json.Marshal(reqBody)
@@ -59,7 +59,7 @@ func GetSelectedWeekData(status1, status2, lastWeek string) ResponseData {
 	}
 
 	// 指定したURLとHTTPメソッド、およびHTTPリクエストボディを使用して、新しいHTTPリクエストを作成
-	req, err := http.NewRequest("POST", GetNotionEndpoint(), bytes.NewBuffer(jsonBody))
+	req, err := http.NewRequest("POST", GetNotionEndpoint("/query"), bytes.NewBuffer(jsonBody))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -103,7 +103,7 @@ func GetSelectedWeekData(status1, status2, lastWeek string) ResponseData {
 }
 
 // 先週データを今週データに変更
-func UpdateSelectedWeekData(body ResponseData, thisWeek string) {
+func UpdateSelectedWeekData(body ResponseData) {
 
 	for _, page := range body.Results {
 		pageID := page.ID
@@ -112,7 +112,7 @@ func UpdateSelectedWeekData(body ResponseData, thisWeek string) {
 			Properties: map[string]interface{}{
 				"Week": map[string]interface{}{
 					"select": map[string]interface{}{
-						"name": thisWeek,
+						"name": THIS_WEEK,
 					},
 				},
 			},
@@ -121,7 +121,7 @@ func UpdateSelectedWeekData(body ResponseData, thisWeek string) {
 		// GoのデータをJSON形式のバイト配列にエンコード
 		jsonUpdateBody, _ := json.Marshal(updateReqBody)
 
-		updateURL := "https://api.notion.com/v1/pages/" + pageID
+		updateURL := PAGES_ENDPOINT + pageID
 		updateReq, _ := http.NewRequest("PATCH", updateURL, bytes.NewBuffer(jsonUpdateBody))
 
 		// header変数を使用してリクエストヘッダを設定
@@ -144,5 +144,54 @@ func UpdateSelectedWeekData(body ResponseData, thisWeek string) {
 
 		fmt.Printf("Updated Name: %s\n", updatedPage.Properties.Name.Title[0].Text.Content)
 
+	}
+}
+
+// 色を更新する
+func UpdateSelectedWeeklyColor() {
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/%s", DATABASE_ENDPOINT, DATABASE_ID), nil)
+	if err != nil {
+		panic(err)
+	}
+
+	// header変数を使用してリクエストヘッダを設定
+	header := GetRequestHeader()
+	for key, value := range header {
+		req.Header.Add(key, value)
+	}
+
+	// HTTPリクエスト実行
+	res := DoRequest(req)
+
+	defer res.Body.Close()
+
+	var databaseData map[string]interface{}
+	if err := json.NewDecoder(res.Body).Decode(&databaseData); err != nil {
+		panic(err)
+	}
+
+	// カラム名が「Week」のセレクトを取得
+	properties := databaseData["properties"].(map[string]interface{})
+	selectProperty, ok := properties[SELECT_WEEK_NAME].(map[string]interface{})
+	if !ok {
+		panic(fmt.Errorf("%s is not a select property", SELECT_WEEK_NAME))
+	}
+
+	// 取得したセレクトに含まれるオプションを全て取得
+	options, ok := selectProperty["options"].([]interface{})
+	if !ok {
+		panic(fmt.Errorf("%s does not have options", SELECT_WEEK_NAME))
+	}
+
+	// 取得したオプションを一つずつ取り出して色を変更していく
+	for _, option := range options {
+		opt := option.(map[string]interface{})
+
+		switch opt["name"].(string) {
+		case LAST_WEEK:
+			opt["color"] = LAST_COLOR
+		case THIS_WEEK:
+			opt["color"] = THIS_COLOR
+		}
 	}
 }

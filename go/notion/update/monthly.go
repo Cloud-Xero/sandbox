@@ -59,7 +59,7 @@ func GetSelectedMonthData(status1, status2, lastMonth string) ResponseData {
 	}
 
 	// 指定したURLとHTTPメソッド、およびHTTPリクエストボディを使用して、新しいHTTPリクエストを作成
-	req, err := http.NewRequest("POST", GetNotionEndpoint(), bytes.NewBuffer(jsonBody))
+	req, err := http.NewRequest("POST", GetNotionEndpoint("/query"), bytes.NewBuffer(jsonBody))
 	if err != nil {
 		log.Fatal(err)
 	}

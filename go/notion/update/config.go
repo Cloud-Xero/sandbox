@@ -7,52 +7,51 @@ import (
 	"github.com/joho/godotenv"
 )
 
-// 共通定数
-func CommonConstants() (string, string) {
-	statusNot := "Not Started"
-	statusProgress := "In Progress"
+var (
+	DATABASE_ENDPOINT = "https://api.notion.com/v1/databases/"
+	PAGES_ENDPOINT    = "https://api.notion.com/v1/pages/"
+	NOTION_API_KEY    string
+	DATABASE_ID       string
 
-	return statusNot, statusProgress
-}
+	STATUS_NOT      = "Not Started"
+	STATUS_PROGRESS = "In Progress"
 
-// Weekly用定数
-func WeeklyConstants() (string, string) {
-	lastWeek := "8/22 ~ 8/31"
-	thisWeek := "9/1 ~ 9/7"
+	LAST_WEEK        = "8/22 ~ 8/31"
+	THIS_WEEK        = "9/1 ~ 9/7"
+	SELECT_WEEK_NAME = "Week"
 
-	return lastWeek, thisWeek
-}
+	LAST_MONTH        = "August"
+	THIS_MONTH        = "September"
+	SELECT_MONTH_NAME = "Month"
 
-// Monthly用定数
-func MonthlyConstants() (string, string) {
-	lastMonth := "August"
-	thisMonth := "September"
+	LAST_COLOR = "gray"
+	THIS_COLOR = "yellow"
+)
 
-	return lastMonth, thisMonth
+func init() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	NOTION_API_KEY = os.Getenv("NOTION_API_KEY")
+	DATABASE_ID = os.Getenv("DATABASE_ID")
+
+	if NOTION_API_KEY == "" || DATABASE_ID == "" {
+		log.Fatal("NOTION_API_KEY or DATABASE_ID is not set in the environment")
+	}
 }
 
 // HTTPリクエストヘッダー情報を取得
 func GetRequestHeader() map[string]string {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-
-	header := map[string]string{
-		"Authorization":  "Bearer " + os.Getenv("NOTION_API_KEY"),
+	return map[string]string{
+		"Authorization":  "Bearer " + NOTION_API_KEY,
 		"Notion-Version": "2022-06-28",
 		"Content-Type":   "application/json",
 	}
-
-	return header
 }
 
 // エンドポイントを生成
-func GetNotionEndpoint() string {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-
-	return "https://api.notion.com/v1/databases/" + os.Getenv("DATABASE_ID") + "/query"
+func GetNotionEndpoint(subDir string) string {
+	return DATABASE_ENDPOINT + DATABASE_ID + subDir
 }
