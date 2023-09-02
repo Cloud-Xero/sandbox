@@ -54,9 +54,9 @@
 
 ## ToDo
 
-- [ ] Change the color of weekly label
-  - [ ] Light Gray → Yellow
-  - [ ] Yellow → Gray
+- [x] [incomplete] Change the color of weekly label
+  - [x] Light Gray → Yellow
+  - [x] Yellow → Gray
 - [ ] Deal rate limit
 - [ ] Update Date
 - [ ] Create UI
