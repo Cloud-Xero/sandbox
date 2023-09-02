@@ -146,3 +146,52 @@ func UpdateSelectedMonthData(body ResponseData) {
 
 	}
 }
+
+// 色を更新する
+func UpdateSelectedMonthlyColor() {
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/%s", DATABASE_ENDPOINT, DATABASE_ID), nil)
+	if err != nil {
+		panic(err)
+	}
+
+	// header変数を使用してリクエストヘッダを設定
+	header := GetRequestHeader()
+	for key, value := range header {
+		req.Header.Add(key, value)
+	}
+
+	// HTTPリクエスト実行
+	res := DoRequest(req)
+
+	defer res.Body.Close()
+
+	var databaseData map[string]interface{}
+	if err := json.NewDecoder(res.Body).Decode(&databaseData); err != nil {
+		panic(err)
+	}
+
+	// カラム名が「Month」のセレクトを取得
+	properties := databaseData["properties"].(map[string]interface{})
+	selectProperty, ok := properties[SELECT_MONTH_NAME].(map[string]interface{})
+	if !ok {
+		panic(fmt.Errorf("%s is not a select property", SELECT_MONTH_NAME))
+	}
+
+	// 取得したセレクトに含まれるオプションを全て取得
+	options, ok := selectProperty["options"].([]interface{})
+	if !ok {
+		panic(fmt.Errorf("%s does not have options", SELECT_MONTH_NAME))
+	}
+
+	// 取得したオプションを一つずつ取り出して色を変更していく
+	for _, option := range options {
+		opt := option.(map[string]interface{})
+
+		switch opt["name"].(string) {
+		case LAST_MONTH:
+			opt["color"] = LAST_COLOR
+		case THIS_MONTH:
+			opt["color"] = THIS_COLOR
+		}
+	}
+}

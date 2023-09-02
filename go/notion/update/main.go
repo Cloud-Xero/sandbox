@@ -8,7 +8,7 @@ func main() {
 	if monthlyFlag {
 
 		// Monthly Execution
-		// UpdateSelectedMonthlyColor()
+		UpdateSelectedMonthlyColor()
 		res := GetSelectedMonthData()
 		UpdateSelectedMonthData(res)
 	}
