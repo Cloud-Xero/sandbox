@@ -7,7 +7,7 @@ terraform {
 
 provider "google" {
   # [YOUR PROJECT]を自身のGCPプロジェクト名に置き換える
-  project = "kouzoh-p-tmp-h-komamiya"
+  project = "[YOUR PROJECT]"
   zone    = "asia-northeast1-b"
 }
 

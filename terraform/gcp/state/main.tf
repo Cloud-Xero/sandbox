@@ -6,7 +6,7 @@ terraform {
 }
 
 provider "google" {
-  project = "kouzoh-p-tmp-h-komamiya"
+  project = "[YOUR PROJECT]"
   region  = "asia-northeast1"
   zone    = "asia-northeast1-c"
 }
