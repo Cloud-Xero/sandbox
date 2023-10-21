@@ -1,7 +1,9 @@
-import "./style.css";
+import "../style.css";
 import "mapbox-gl/dist/mapbox-gl.css";
 import mapboxgl from "mapbox-gl"; // or "const mapboxgl = require('mapbox-gl');"
-import { geoJsonPoints, symbols } from "../data/GeoJson-Point";
+import { geoJsonPoints, symbols } from "./geoJsonPoint";
+import { getQuakeList } from "./getQuakeList";
+import type { QuakeData } from "./getQuakeList";
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 const map = new mapboxgl.Map({
