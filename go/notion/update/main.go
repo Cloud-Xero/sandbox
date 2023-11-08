@@ -3,7 +3,7 @@ package main
 func main() {
 
 	// monthlyFlagがtrueの時、月次処理
-	monthlyFlag := true
+	monthlyFlag := false
 
 	if monthlyFlag {
 
