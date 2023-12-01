@@ -16,12 +16,12 @@ var (
 	STATUS_NOT      = "Not Started"
 	STATUS_PROGRESS = "In Progress"
 
-	LAST_WEEK        = "11/15 ~ 11/21"
-	THIS_WEEK        = "11/22 ~ 11/30"
+	LAST_WEEK        = "11/22 ~ 11/30"
+	THIS_WEEK        = "12/1 ~ 12/7"
 	SELECT_WEEK_NAME = "Week"
 
-	LAST_MONTH        = "October"
-	THIS_MONTH        = "November"
+	LAST_MONTH        = "November"
+	THIS_MONTH        = "December"
 	SELECT_MONTH_NAME = "Month"
 
 	LAST_COLOR = "gray"
