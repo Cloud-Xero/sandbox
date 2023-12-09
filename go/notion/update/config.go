@@ -16,8 +16,8 @@ var (
 	STATUS_NOT      = "Not Started"
 	STATUS_PROGRESS = "In Progress"
 
-	LAST_WEEK        = "11/22 ~ 11/30"
-	THIS_WEEK        = "12/1 ~ 12/7"
+	LAST_WEEK        = "12/1 ~ 12/7"
+	THIS_WEEK        = "12/8 ~ 12/14"
 	SELECT_WEEK_NAME = "Week"
 
 	LAST_MONTH        = "November"
