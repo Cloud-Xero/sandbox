@@ -1,24 +1,24 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { ListItem } from "./components/ListItem";
+import articles from "./dummies/articles.json";
 
 export default function App() {
+  const items = articles.map((article, index) => {
+    return (
+      <ListItem
+        imageUrl={article.urlToImage}
+        title={article.title}
+        author={article.author}
+        key={index.toString()}
+      />
+    );
+  });
   return (
-    <View style={styles.container}>
-      <ListItem
-        imageUrl={"https://picsum.photos/id/10/300/300"}
-        title={
-          "Exercitation aute sunt in nulla nisi culpa eiusmod ad minim et."
-        }
-        author={"React News"}
-      />
-      <ListItem
-        imageUrl={"https://picsum.photos/id/20/300/300"}
-        title={"Commodo irure enim nulla irure aliqua nisi sit et."}
-        author={"Japan News"}
-      />
+    <SafeAreaView style={styles.container}>
+      <ScrollView>{items}</ScrollView>
       <StatusBar style="auto" />
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -26,7 +26,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
   },
 });
