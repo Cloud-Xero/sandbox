@@ -5,6 +5,8 @@ import { ArticleScreen } from "./screen/ArticleScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { ClipScreen } from "./screen/ClipScreen";
 import { FontAwesome } from "@expo/vector-icons";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -34,19 +36,21 @@ const HomeStack = () => {
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator screenOptions={screenOption}>
-        <Tab.Screen
-          name="HomeTab"
-          component={HomeStack}
-          options={{ headerShown: false, title: "Home" }}
-        />
-        <Tab.Screen
-          name="ClipTab"
-          component={ClipScreen}
-          options={{ headerShown: false, title: "Clip" }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Tab.Navigator screenOptions={screenOption}>
+          <Tab.Screen
+            name="HomeTab"
+            component={HomeStack}
+            options={{ headerShown: false, title: "Home" }}
+          />
+          <Tab.Screen
+            name="ClipTab"
+            component={ClipScreen}
+            options={{ headerShown: false, title: "Clip" }}
+          />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
