@@ -7,7 +7,7 @@ import Constants from "expo-constants";
 
 const URL = `https://newsapi.org/v2/top-headlines?country=jp&category=business&apiKey=${Constants.expoConfig.extra.newsApiKey}`;
 
-export const HomeScreen = () => {
+export const HomeScreen = ({ navigation }) => {
   const [articles, setArticles] = useState([]);
 
   const fetchArticles = async () => {
@@ -24,14 +24,6 @@ export const HomeScreen = () => {
     fetchArticles();
   }, []);
 
-  const items = articles.map((article, index) => (
-    <ListItem
-      imageUrl={article.urlToImage}
-      title={article.title}
-      author={article.author}
-      key={index.toString()}
-    />
-  ));
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
@@ -41,12 +33,11 @@ export const HomeScreen = () => {
             imageUrl={item.urlToImage}
             title={item.title}
             author={item.author}
+            onPress={() => navigation.navigate("Article")}
           />
         )}
         keyExtractor={(_, index) => index.toString()}
-      >
-        {items}
-      </FlatList>
+      ></FlatList>
     </SafeAreaView>
   );
 };
