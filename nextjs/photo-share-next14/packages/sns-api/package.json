@@ -1,0 +1,50 @@
+{
+  "name": "sns-api-2",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 8082",
+    "build": "next build",
+    "start": "next start -p 8082",
+    "clean": "rimraf .next/cache/fetch-cache",
+    "clean-dev": "run-s clean dev",
+    "clean-build": "run-s clean build",
+    "clean-start": "run-s clean build start",
+    "db-migrate-deploy": "prisma migrate deploy",
+    "db-migrate-dev": "prisma migrate dev",
+    "db-push": "prisma db push",
+    "db-seed": "prisma migrate reset",
+    "db-studio": "prisma studio",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "format": "run-s format:*",
+    "format:elint": "eslint --fix './src/**/*.{js,ts,tsx}'",
+    "format:prettier": "prettier --write './src/**/*.{js,ts,tsx}'"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.0.0",
+    "next": "14.2.2",
+    "prisma": "^5.0.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/uuid": "^9.0.2",
+    "@typescript-eslint/eslint-plugin": "^6.9.0",
+    "@typescript-eslint/parser": "^6.9.0",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.2",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-unused-imports": "^3.0.0",
+    "prettier": "^3.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed/index.ts"
+  }
+}
